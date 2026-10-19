@@ -3,44 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>zombie · glass</title>
+<title>zombie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 :root {
-    --accent: 139, 92, 246;
-    --accent-2: 34, 211, 238;
+    --menu-color: 255, 255, 255;
     --menu-x: 3vw;
     --menu-y: 5vh;
 
-    --glass-bg: rgba(16, 16, 22, 0.55);
-    --glass-bg-strong: rgba(20, 20, 28, 0.72);
-    --glass-border: rgba(255, 255, 255, 0.10);
-    --glass-border-strong: rgba(255, 255, 255, 0.20);
-    --glass-highlight: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 0.6vw 2vw rgba(0, 0, 0, 0.55);
-
+    --bg-0: #050505;
+    --bg-1: #0a0a0a;
+    --bg-2: #111111;
+    --bg-3: #161616;
+    --border-soft: rgba(255,255,255,0.08);
+    --border-accent: rgba(255,255,255,0.22);
     --text-0: #ffffff;
-    --text-1: rgba(255, 255, 255, 0.92);
-    --text-2: rgba(255, 255, 255, 0.62);
-    --text-3: rgba(255, 255, 255, 0.35);
-
-    --ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
-    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --text-1: #e8e8e8;
+    --text-2: #a0a0a0;
+    --text-3: #5a5a5a;
+    --white: rgb(255,255,255);
+    --white-soft: rgba(255,255,255,0.12);
+    --white-glow: rgba(255,255,255,0.25);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
     background: transparent !important;
+    background-color: transparent !important;
     height: 100vh;
     overflow: hidden;
     user-select: none;
     font-family: 'Inter', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: var(--text-1);
+    margin: 0;
+    padding: 0;
 }
 
 #root {
@@ -58,23 +59,17 @@ html, body {
     display: flex;
     left: var(--menu-x);
     top: var(--menu-y);
+    transform: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     font-family: 'Inter', sans-serif;
-    filter: drop-shadow(0 0.8vw 2vw rgba(0, 0, 0, 0.45));
+    filter: drop-shadow(0 0.5vw 1vw rgba(0,0,0,0.6));
     pointer-events: auto;
-    opacity: 0;
-    transform: translateY(0.6vw) scale(0.985);
-    transition: opacity 0.35s var(--ease-soft), transform 0.5s var(--ease-spring);
-}
-.PWrapper.fadeIn {
-    opacity: 1;
-    transform: translateY(0) scale(1);
 }
 
 /* ============================================================
-   BANNER (glass + reflection)
+   BANNER
    ============================================================ */
 .PWrapper .PBanner {
     position: relative;
@@ -83,41 +78,29 @@ html, body {
     height: 6.2vw;
     justify-content: center;
     align-items: center;
-    border-top-left-radius: 0.9vw;
-    border-top-right-radius: 0.9vw;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
     overflow: hidden;
-    border: 0.06vw solid var(--glass-border-strong);
+    border: 0.05vw solid var(--border-accent);
     border-bottom: none;
-    background:
-        linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 40%, rgba(0,0,0,0.35) 100%),
-        linear-gradient(180deg, var(--glass-bg-strong), var(--glass-bg));
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
 }
-.PWrapper .PBanner::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 45%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
-    pointer-events: none;
-    mix-blend-mode: overlay;
-}
+
 .PWrapper .PBanner::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 55%, rgba(10,10,14,0.85) 100%);
+    background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.85) 100%);
     pointer-events: none;
 }
+
 .PWrapper .PBanner img {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    opacity: 0.85;
-    transition: opacity 0.4s var(--ease-soft);
+    opacity: 0.9;
 }
 
 /* ============================================================
@@ -129,36 +112,37 @@ html, body {
     justify-content: flex-start;
     align-items: stretch;
     flex-direction: row;
-    gap: 0.28vw;
+    gap: 0.2604vw;
 }
 
 /* ============================================================
-   SCROLLBAR (glass pill)
+   SCROLLBAR
    ============================================================ */
 .PWrapper .PElements .PScroll {
     position: absolute;
     display: flex;
-    right: -0.95vw;
+    right: -0.85vw;
     top: 0;
     width: 0.55vw;
     height: 100%;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.6);
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     gap: 0.15vw;
-    border-radius: 999vw;
-    border: 0.05vw solid var(--glass-border);
-    box-shadow: inset 0 0 0.3vw rgba(0,0,0,0.7);
+    border-radius: 0.25vw;
+    border: 0.04vw solid var(--border-soft);
+    box-shadow: inset 0 0 0.3vw rgba(0,0,0,0.9);
 }
+
 .PWrapper .PElements .PScroll i {
     font-size: 0.55vw;
     color: var(--text-3);
     margin: 0.12vw 0;
-    transition: color 0.25s var(--ease-soft);
+    transition: color 0.2s;
 }
-.PWrapper .PElements .PScroll:hover i { color: var(--text-0); }
+
+.PWrapper .PElements .PScroll:hover i { color: var(--white); }
 
 .PWrapper .PElements .PScroll .PSProgressWrapper {
     position: relative;
@@ -168,19 +152,16 @@ html, body {
     justify-content: center;
     align-items: flex-start;
 }
+
 .PWrapper .PElements .PScroll .PSProgress {
     position: relative;
     display: flex;
     width: 0.28vw;
     margin-top: 0.15vw;
-    background: linear-gradient(180deg,
-        rgba(var(--accent), 1) 0%,
-        rgba(var(--accent-2), 0.85) 100%);
-    border-radius: 999vw;
-    box-shadow:
-        0 0 0.4vw rgba(var(--accent), 0.55),
-        0 0 0.18vw rgba(var(--accent-2), 0.4);
-    transition: top 0.35s var(--ease-spring), height 0.35s var(--ease-spring);
+    background: linear-gradient(180deg, var(--white) 0%, rgba(255,255,255,0.5) 100%);
+    border-radius: 0.25vw;
+    box-shadow: 0 0 0.3vw var(--white-glow), 0 0 0.15vw rgba(255,255,255,0.5);
+    transition: top 0.25s ease, height 0.25s ease;
 }
 
 /* ============================================================
@@ -196,7 +177,7 @@ html, body {
 }
 
 /* ============================================================
-   CATEGORIES (glass header)
+   CATEGORIES
    ============================================================ */
 .PWrapper .PCategories {
     position: relative;
@@ -206,22 +187,13 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-    border-left: 0.06vw solid var(--glass-border-strong);
-    border-right: 0.06vw solid var(--glass-border-strong);
-    border-bottom: 0.06vw solid var(--glass-border);
+    background: var(--bg-0);
+    border-left: 0.05vw solid var(--border-accent);
+    border-right: 0.05vw solid var(--border-accent);
+    border-bottom: 0.05vw solid var(--border-accent);
     overflow: hidden;
 }
-.PWrapper .PCategories::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; top: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
-    pointer-events: none;
-}
+
 .PWrapper .PCategories .PCategory {
     position: relative;
     display: flex;
@@ -231,28 +203,30 @@ html, body {
     justify-content: center;
     align-items: center;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.74vw;
+    font-size: 0.72vw;
     font-weight: 500;
-    letter-spacing: 0.03vw;
+    letter-spacing: 0.02vw;
     color: var(--text-2);
-    transition: color 0.3s var(--ease-soft), background 0.3s var(--ease-soft);
+    transition: color 0.25s, background 0.25s;
     cursor: default;
 }
+
 .PWrapper .PCategories .PCategory.active {
-    color: var(--text-0);
-    background: linear-gradient(0deg, rgba(var(--accent), 0.16) 0%, transparent 100%);
-    box-shadow: inset 0 -0.06vw 0 0 rgba(var(--accent), 0.9);
+    color: var(--white);
+    background: linear-gradient(0deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+    box-shadow: inset 0 -0.05vw 0 0 var(--white);
 }
+
 .PWrapper .PCategories .PCategory:only-child {
     position: absolute;
     left: 0;
-    padding: 0 0.9vw;
+    padding: 0 0.8vw;
     justify-content: flex-start;
-    font-size: 0.72vw;
+    font-size: 0.7vw;
 }
 
 /* ============================================================
-   TABS (glass container)
+   TABS
    ============================================================ */
 .PWrapper .PTabs {
     position: relative;
@@ -263,47 +237,19 @@ html, body {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    background: var(--glass-bg);
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
-    border-left: 0.06vw solid var(--glass-border-strong);
-    border-right: 0.06vw solid var(--glass-border-strong);
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    border-left: 0.05vw solid var(--border-accent);
+    border-right: 0.05vw solid var(--border-accent);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0.28vw 0;
+    padding: 0.2vw 0;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.PWrapper .PTabs::-webkit-scrollbar { display: none; }
 
-/* ACTIVE INDICATOR — glass pill sliding smoothly */
-.PWrapper .PTabs .activeIndicator {
-    position: absolute;
-    width: calc(100% - 0.5vw);
-    left: 0.25vw;
-    top: 0;
-    height: 1.5625vw;
-    background:
-        linear-gradient(90deg,
-            rgba(var(--accent), 0.18) 0%,
-            rgba(var(--accent-2), 0.10) 100%);
-    border: 0.05vw solid rgba(var(--accent), 0.55);
-    border-radius: 0.35vw;
-    box-shadow:
-        0 0 0.6vw rgba(var(--accent), 0.35),
-        inset 0 0 0.4vw rgba(var(--accent), 0.15);
-    z-index: 0;
-    pointer-events: none;
-    transition:
-        top 0.38s var(--ease-spring),
-        height 0.24s var(--ease-spring),
-        box-shadow 0.3s var(--ease-soft);
-}
+.PWrapper .PTabs::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
-/* ============================================================
-   TAB ROW
-   ============================================================ */
 .PWrapper .PTabs .PTab {
     position: relative;
     display: flex;
@@ -313,18 +259,13 @@ html, body {
     max-height: 1.5625vw;
     justify-content: center;
     align-items: center;
-    transition: transform 0.25s var(--ease-spring), background 0.3s var(--ease-soft);
-    border-bottom: 0.04vw solid rgba(255,255,255,0.025);
+    transition: background 0.2s ease;
+    border-bottom: 0.04vw solid rgba(255,255,255,0.02);
     z-index: 1;
 }
-.PWrapper .PTabs .PTab:hover {
-    background: rgba(255,255,255,0.04);
-}
-.PWrapper .PTabs .PTab.active {
-    background: transparent;
-}
 
-/* subtle blur on non-active, sharp on active */
+.PWrapper .PTabs .PTab:hover { background: rgba(255,255,255,0.03); }
+
 .PWrapper .PTabs .PTab .PTLabel,
 .PWrapper .PTabs .PTab .Checkbox,
 .PWrapper .PTabs .PTab .Slider,
@@ -332,9 +273,9 @@ html, body {
 .PWrapper .PTabs .PTab .Scrollable,
 .PWrapper .PTabs .PTab .Divider {
     filter: blur(0.3px);
-    opacity: 0.86;
-    transition: filter 0.3s var(--ease-soft), opacity 0.3s var(--ease-soft);
+    transition: filter 0.2s ease;
 }
+
 .PWrapper .PTabs .PTab:hover .PTLabel,
 .PWrapper .PTabs .PTab:hover .Checkbox,
 .PWrapper .PTabs .PTab:hover .Slider,
@@ -348,193 +289,165 @@ html, body {
 .PWrapper .PTabs .PTab.active .Scrollable,
 .PWrapper .PTabs .PTab.active .Divider {
     filter: blur(0);
-    opacity: 1;
-}
-
-/* stagger fade-in of tabs */
-.PWrapper .PTabs .PTab {
-    animation: tabIn 0.4s var(--ease-spring) both;
-}
-@keyframes tabIn {
-    from { opacity: 0; transform: translateX(-0.4vw); }
-    to   { opacity: 1; transform: translateX(0); }
 }
 
 .PWrapper .PTabs .PTab .PTLabel {
     position: absolute;
-    display: flex;
-    left: 0.7vw;
+    display: block;
+    left: 0.6vw;
     width: 62%;
     height: 60%;
-    align-items: center;
     font-family: 'Inter', sans-serif;
-    font-size: 0.63vw;
+    font-size: 0.62vw;
     font-weight: 400;
-    letter-spacing: 0.015vw;
+    letter-spacing: 0.01vw;
     color: var(--text-1);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: color 0.25s var(--ease-soft), letter-spacing 0.25s var(--ease-soft);
-}
-.PWrapper .PTabs .PTab.active .PTLabel {
-    color: var(--text-0);
-    font-weight: 500;
-    letter-spacing: 0.02vw;
-}
-.PWrapper .PTabs .PTab i.fa-angle-right {
-    position: absolute;
     display: flex;
-    right: 0.75vw;
-    font-size: 0.55vw;
-    color: var(--text-3);
-    transition: color 0.25s var(--ease-soft), transform 0.25s var(--ease-spring);
-}
-.PWrapper .PTabs .PTab.active i.fa-angle-right,
-.PWrapper .PTabs .PTab:hover i.fa-angle-right {
-    color: var(--text-0);
-    transform: translateX(0.1vw);
+    align-items: center;
+    transition: color 0.2s;
 }
 
-/* ============================================================
-   CHECKBOX (glass pill)
-   ============================================================ */
-.PWrapper .PTabs .PTab .Checkbox {
+.PWrapper .PTabs .PTab.active .PTLabel { color: var(--white); font-weight: 500; }
+
+.PWrapper .PTabs .PTab i {
     position: absolute;
-    right: 0.75vw;
+    display: flex;
+    right: 0.7vw;
+    font-size: 0.55vw;
+    color: var(--text-3);
+    transition: color 0.2s, transform 0.2s;
+}
+
+.PWrapper .PTabs .PTab.active i,
+.PWrapper .PTabs .PTab:hover i { color: var(--white); }
+
+/* CHECKBOX */
+.PWrapper .PTabs .PTab .Checkbox,
+.PWrapper .PTabs .PTab .TOptions .Checkbox {
+    position: relative;
     display: flex;
     width: 1.5625vw;
     height: 0.7813vw;
     justify-content: flex-start;
     align-items: center;
-    background: rgba(0,0,0,0.35);
-    border: 0.05vw solid var(--glass-border);
+    background: #141414;
+    border: 0.04vw solid var(--border-soft);
     border-radius: 999vw;
-    transition: background 0.35s var(--ease-soft), border-color 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft);
-    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.8);
-    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.9);
 }
-.PWrapper .PTabs .PTab .Checkbox.Checked {
-    background: rgba(var(--accent), 0.55);
-    border-color: rgba(var(--accent), 0.9);
-    box-shadow:
-        inset 0 0.05vw 0.15vw rgba(0,0,0,0.4),
-        0 0 0.55vw rgba(var(--accent), 0.65);
+
+.PWrapper .PTabs .PTab .Checkbox.Checked,
+.PWrapper .PTabs .PTab .TOptions .Checkbox.Checked {
+    background: rgba(255,255,255,0.85);
+    border-color: var(--white);
+    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.5), 0 0 0.4vw var(--white-glow);
 }
-.PWrapper .PTabs .PTab .Checkbox .Inside {
+
+.PWrapper .PTabs .PTab .Checkbox .Inside,
+.PWrapper .PTabs .PTab .TOptions .Checkbox .Inside {
     position: absolute;
+    display: flex;
     left: 0.13vw;
     width: 0.45vw;
     height: 0.45vw;
-    background: linear-gradient(180deg, #ffffff 0%, #c8c8c8 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 100%);
     border-radius: 999vw;
-    box-shadow:
-        0 0.05vw 0.1vw rgba(0,0,0,0.7),
-        inset 0 0.03vw 0.06vw rgba(255,255,255,0.9);
-    transition: left 0.35s var(--ease-spring), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
-}
-.PWrapper .PTabs .PTab .Checkbox.Checked .Inside {
-    left: 0.95vw;
-    background: linear-gradient(180deg, #ffffff 0%, #eaeaea 100%);
-    box-shadow:
-        0 0.05vw 0.1vw rgba(0,0,0,0.7),
-        0 0 0.25vw rgba(255,255,255,0.7);
+    box-shadow: 0 0.05vw 0.1vw rgba(0,0,0,0.7), inset 0 0.03vw 0.06vw rgba(255,255,255,0.9);
+    transition: 0.3s ease;
 }
 
-/* ============================================================
-   SLIDER (glass)
-   ============================================================ */
-.PWrapper .PTabs .PTab .Slider {
-    position: absolute;
-    right: 0.75vw;
-    display: flex;
-    width: 2.3438vw;
-    height: 0.22vw;
-    justify-content: flex-start;
-    align-items: center;
-    background: rgba(0,0,0,0.35);
-    border: 0.05vw solid var(--glass-border);
-    border-radius: 999vw;
-    box-shadow: inset 0 0.06vw 0.12vw rgba(0,0,0,0.85);
-    backdrop-filter: blur(4px);
-    overflow: visible;
+.PWrapper .PTabs .PTab .Checkbox.Checked .Inside,
+.PWrapper .PTabs .PTab .TOptions .Checkbox.Checked .Inside {
+    left: 0.95vw;
+    background: linear-gradient(180deg, #fff 0%, #e8e8e8 100%);
+    box-shadow: 0 0.05vw 0.1vw rgba(0,0,0,0.7), 0 0 0.2vw var(--white-glow);
 }
-.PWrapper .PTabs .PTab .Slider .Progress {
+
+.PWrapper .PTabs .PTab > .Checkbox { position: absolute; right: 0.7vw; }
+
+/* SLIDER */
+.PWrapper .PTabs .PTab .Slider,
+.PWrapper .PTabs .PTab .TOptions .Slider {
     position: relative;
     display: flex;
-    height: 100%;
+    width: 2.3438vw;
+    height: 0.2083vw;
+    justify-content: flex-start;
     align-items: center;
-    background: linear-gradient(90deg,
-        rgba(var(--accent), 0.55) 0%,
-        rgba(var(--accent-2), 0.95) 100%);
+    background: #141414;
+    border: 0.03vw solid var(--border-soft);
     border-radius: 999vw;
-    box-shadow: 0 0 0.35vw rgba(var(--accent), 0.55);
-    transition: width 0.28s var(--ease-spring);
-}
-.PWrapper .PTabs .PTab .Slider .Progress .Thumb {
-    position: absolute;
-    right: -0.1vw;
-    width: 0.44vw;
-    height: 0.44vw;
-    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #d0d0d0 100%);
-    border-radius: 999vw;
-    box-shadow:
-        0 0.05vw 0.15vw rgba(0,0,0,0.8),
-        0 0 0.3vw rgba(var(--accent-2), 0.8);
-    transition: box-shadow 0.3s var(--ease-soft);
-}
-.PWrapper .PTabs .PTab.active .Slider .Progress .Thumb {
-    box-shadow:
-        0 0.05vw 0.15vw rgba(0,0,0,0.8),
-        0 0 0.5vw rgba(var(--accent-2), 1);
+    box-shadow: inset 0 0.06vw 0.12vw rgba(0,0,0,0.9);
 }
 
-/* ============================================================
-   TOptions
-   ============================================================ */
+.PWrapper .PTabs .PTab .Slider .Progress,
+.PWrapper .PTabs .PTab .TOptions .Slider .Progress {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, var(--white) 100%);
+    border-radius: 999vw;
+    box-shadow: 0 0 0.2vw var(--white-glow);
+    transition: width 0.15s ease;
+}
+
+.PWrapper .PTabs .PTab .Slider .Progress .Thumb,
+.PWrapper .PTabs .PTab .TOptions .Slider .Progress .Thumb {
+    position: absolute;
+    right: 0;
+    width: 0.4167vw;
+    height: 0.4167vw;
+    background: linear-gradient(180deg, #fff 0%, #d0d0d0 100%);
+    border-radius: 999vw;
+    box-shadow: 0 0.05vw 0.15vw rgba(0,0,0,0.8), 0 0 0.2vw var(--white-glow);
+}
+
+.PWrapper .PTabs .PTab .Slider { position: absolute; right: 0.7vw; }
+
+/* TOptions */
 .PWrapper .PTabs .PTab .TOptions {
     position: absolute;
-    right: 0.75vw;
     display: flex;
+    right: 0.7vw;
+    width: auto;
     justify-content: flex-end;
     align-items: center;
     flex-direction: row;
-    gap: 0.55vw;
-}
-.PWrapper .PTabs .PTab .TOptions .Slider {
-    position: relative;
-    right: auto;
-}
-.PWrapper .PTabs .PTab .TOptions .Checkbox {
-    position: relative;
-    right: auto;
+    gap: 0.5vw;
 }
 
-/* ============================================================
-   SCROLLABLE
-   ============================================================ */
-.PWrapper .PTabs .PTab .Scrollable {
-    position: absolute;
-    right: 0.75vw;
+/* SCROLLABLE */
+.PWrapper .PTabs .PTab .Scrollable,
+.PWrapper .PTabs .PTab .TOptions .Scrollable {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap: 0.35vw;
+    gap: 0.3vw;
     font-size: 0.6vw;
-    font-weight: 500;
-    color: var(--text-0);
+    font-weight: 400;
+    color: var(--white);
     letter-spacing: 0.02vw;
 }
+
 .PWrapper .PTabs .PTab .Scrollable span:first-child,
-.PWrapper .PTabs .PTab .Scrollable span:last-child {
+.PWrapper .PTabs .PTab .Scrollable span:last-child,
+.PWrapper .PTabs .PTab .TOptions .Scrollable span:first-child,
+.PWrapper .PTabs .PTab .TOptions .Scrollable span:last-child {
     color: var(--text-3);
-    font-weight: 400;
+    font-weight: 300;
 }
 
-/* ============================================================
-   DIVIDER
-   ============================================================ */
+.PWrapper .PTabs .PTab .Scrollable { position: absolute; right: 0.7vw; }
+
+/* DIVIDER */
 .PWrapper .PTabs .PTab .Divider {
     position: absolute;
     left: 50%;
@@ -544,29 +457,34 @@ html, body {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    gap: 0.45vw;
+    gap: 0.4vw;
 }
+
 .PWrapper .PTabs .PTab .Divider .Left,
 .PWrapper .PTabs .PTab .Divider .Right {
+    position: relative;
+    display: flex;
     flex: 1;
-    height: 0.05vw;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--accent), 0.55) 50%, transparent 100%);
+    height: 0.03vw;
+    background: linear-gradient(90deg, transparent 0%, var(--border-accent) 50%, transparent 100%);
 }
+
 .PWrapper .PTabs .PTab .Divider .Label {
+    position: relative;
+    display: flex;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.7vw;
+    font-size: 0.68vw;
     font-weight: 600;
-    letter-spacing: 0.1vw;
-    color: var(--text-0);
+    letter-spacing: 0.08vw;
+    color: var(--white);
     white-space: nowrap;
-    padding: 0 0.45vw;
+    padding: 0 0.4vw;
     text-transform: uppercase;
-    opacity: 0.9;
-    text-shadow: 0 0 0.4vw rgba(var(--accent), 0.6);
+    opacity: 0.85;
 }
 
 /* ============================================================
-   FOOTER (glass)
+   FOOTER
    ============================================================ */
 .PWrapper .PFooter {
     position: relative;
@@ -575,41 +493,34 @@ html, body {
     height: 1.5625vw;
     justify-content: center;
     align-items: center;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-    border-left: 0.06vw solid var(--glass-border-strong);
-    border-right: 0.06vw solid var(--glass-border-strong);
-    border-bottom: 0.06vw solid var(--glass-border-strong);
-    border-bottom-left-radius: 0.9vw;
-    border-bottom-right-radius: 0.9vw;
-    overflow: hidden;
+    background: var(--bg-0);
+    border-left: 0.05vw solid var(--border-accent);
+    border-right: 0.05vw solid var(--border-accent);
+    border-bottom: 0.05vw solid var(--border-accent);
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
 }
-.PWrapper .PFooter::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(var(--accent), 0.6), transparent);
-}
+
 .PWrapper .PFooter img {
     position: absolute;
-    left: 0.55vw;
+    left: 0.5vw;
     width: 0.9vw;
     height: 0.9vw;
     object-fit: contain;
     opacity: 0.9;
-    filter: drop-shadow(0 0 0.15vw rgba(var(--accent), 0.8));
+    filter: drop-shadow(0 0 0.15vw var(--white-glow));
 }
+
 .PWrapper .PFooter .PBuild {
     position: absolute;
-    left: 1.75vw;
+    left: 1.7vw;
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.72vw;
     font-weight: 600;
     letter-spacing: 0.05vw;
-    color: var(--text-0);
+    color: var(--white);
 }
+
 .PWrapper .PFooter .PIndicator {
     position: absolute;
     right: 0.6vw;
@@ -621,7 +532,7 @@ html, body {
 }
 
 /* ============================================================
-   METADATA PANEL (glass)
+   METADATA PANEL
    ============================================================ */
 .PWrapper .Metadata {
     position: absolute;
@@ -632,26 +543,24 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.25vw;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 0.06vw solid var(--glass-border-strong);
-    border-radius: 0.65vw;
-    padding: 0.65vw 0.55vw;
-    box-shadow:
-        var(--glass-shadow),
-        0 0 0.8vw rgba(var(--accent), 0.25),
-        inset 0 0 0.5vw rgba(0,0,0,0.4);
+    gap: 0.2vw;
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    border: 0.05vw solid var(--border-accent);
+    border-radius: 0.4vw;
+    padding: 0.6vw 0.5vw;
+    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.6vw var(--white-glow), inset 0 0 0.5vw rgba(0,0,0,0.6);
 }
+
 .PWrapper .Metadata .Title {
+    position: relative;
     display: flex;
     width: 98%;
     height: 0.9vw;
     justify-content: center;
     align-items: center;
-    color: var(--text-0);
+    color: var(--white);
 }
+
 .PWrapper .Metadata .Title span {
     display: block;
     width: 100%;
@@ -659,140 +568,163 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.88vw;
+    font-size: 0.85vw;
     font-weight: 600;
     letter-spacing: 0.05vw;
     text-align: center;
-    text-shadow: 0 0 0.4vw rgba(var(--accent), 0.6);
 }
+
 .PWrapper .Metadata .Line {
+    position: relative;
+    display: flex;
     width: 98%;
     height: 0.03vw;
     margin-top: 0.15vw;
-    background: linear-gradient(90deg, transparent 0%, rgba(var(--accent), 0.65) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, var(--border-accent) 50%, transparent 100%);
 }
+
 .PWrapper .Metadata .Values {
+    position: relative;
     display: flex;
     width: 98%;
     margin-top: 0.3vw;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 0.22vw;
+    gap: 0.2vw;
 }
+
 .PWrapper .Metadata .Values .Value {
+    position: relative;
     display: flex;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    padding: 0.08vw 0;
-    border-bottom: 0.03vw solid rgba(255,255,255,0.04);
+    padding: 0.05vw 0;
+    border-bottom: 0.03vw solid rgba(255,255,255,0.03);
 }
+
 .PWrapper .Metadata .Values .Value:last-child { border-bottom: none; }
+
 .PWrapper .Metadata .Values .Value .Key {
+    position: relative;
     display: flex;
     height: 0.85vw;
-    align-items: center;
     font-family: 'Inter', sans-serif;
     font-size: 0.58vw;
     font-weight: 300;
-    letter-spacing: 0.03vw;
+    letter-spacing: 0.02vw;
+    align-items: center;
     color: var(--text-2);
     text-transform: uppercase;
 }
+
 .PWrapper .Metadata .Values .Value .Val {
     position: absolute;
-    right: 0.55vw;
+    right: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex-direction: row;
-    gap: 0.3vw;
+    gap: 0.25vw;
 }
+
 .PWrapper .Metadata .Values .Value .Val span {
     height: 0.85vw;
     font-family: 'Inter', sans-serif;
     font-size: 0.58vw;
     font-weight: 500;
+    letter-spacing: 0.02vw;
     color: var(--text-0);
     display: flex;
     align-items: center;
 }
+
 .PWrapper .Metadata .Values .Value .Val .Status {
+    position: relative;
     display: flex;
     width: 0.22vw;
     height: 0.85vw;
-    background: rgba(0,0,0,0.55);
-    border-radius: 0.12vw;
+    background: #000;
+    border-radius: 0.1vw;
     justify-content: center;
     align-items: flex-end;
     overflow: hidden;
-    border: 0.03vw solid var(--glass-border);
+    border: 0.03vw solid var(--border-soft);
 }
+
 .PWrapper .Metadata .Values .Value .Val .Status .Progress {
+    position: absolute;
+    display: flex;
     width: 100%;
     bottom: 0;
-    transition: height 0.35s var(--ease-spring);
+    transition: height 0.25s;
 }
 
 /* ============================================================
-   NOTIFICATIONS (glass)
+   NOTIFICATIONS (FIXED — no black background)
    ============================================================ */
 .NotificationsWrapper {
     position: fixed;
-    bottom: 0.9vw;
-    right: 0.9vw;
+    bottom: 0.8vw;
+    right: 0.8vw;
     display: flex;
     flex-direction: column;
-    gap: 0.55vw;
+    gap: 0.5vw;
     z-index: 9999;
     pointer-events: none;
 }
+
 .Notification {
     position: relative;
     width: 18vw;
-    padding: 0.75vw 0.95vw;
+    padding: 0.7vw 0.9vw;
     display: flex;
     align-items: center;
-    gap: 0.65vw;
+    gap: 0.6vw;
     pointer-events: auto;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 0.06vw solid var(--glass-border-strong);
-    border-radius: 0.55vw;
+    background: linear-gradient(180deg, rgba(20, 20, 28, 0.55) 0%, rgba(12, 12, 18, 0.35) 100%);
+    border: 0.06vw solid rgba(255, 255, 255, 0.14);
+    border-radius: 0.3vw;
     box-shadow:
-        var(--glass-shadow),
-        0 0 0.6vw rgba(var(--accent), 0.25),
-        inset 0 0 0.4vw rgba(0,0,0,0.4);
+        0 0.5vw 1.5vw rgba(0, 0, 0, 0.35),
+        0 0 0.4vw rgba(255, 255, 255, 0.08);
     color: var(--text-1);
     font-family: 'Inter', sans-serif;
     opacity: 0;
     transform: translateY(1.2vw) translateX(140%);
-    transition: opacity 0.35s var(--ease-soft), transform 0.7s var(--ease-spring);
+    transition: opacity 0.3s ease, transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     overflow: hidden;
 }
+
 .Notification::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    pointer-events: none;
 }
+
 .Notification.enter {
     opacity: 1;
     transform: translateY(0) translateX(0);
 }
+
 .Notification.exit {
     opacity: 0;
     transform: translateY(1.2vw) translateX(30%);
 }
+
 .Notification i {
     font-size: 1vw;
     flex-shrink: 0;
-    color: var(--text-0);
-    filter: drop-shadow(0 0 0.25vw rgba(255,255,255,0.5));
+    color: var(--white);
+    filter: drop-shadow(0 0 0.2vw var(--white-glow));
 }
+
 .Notification .NotificationContent {
     display: flex;
     flex-direction: column;
@@ -800,46 +732,48 @@ html, body {
     flex: 1;
     min-width: 0;
 }
+
 .Notification .NotificationTitle {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.84vw;
+    font-size: 0.82vw;
     font-weight: 600;
     letter-spacing: 0.04vw;
-    color: var(--text-0);
+    color: var(--white);
 }
+
 .Notification .NotificationDesc {
     font-size: 0.6vw;
     color: var(--text-2);
     word-break: break-word;
     line-height: 1.35;
 }
+
 .Notification .NotificationProgress {
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 0.16vw;
+    height: 0.15vw;
     width: 100%;
-    background: linear-gradient(90deg,
-        rgba(var(--accent), 1) 0%,
-        rgba(var(--accent-2), 0.7) 100%);
+    background: linear-gradient(90deg, var(--white) 0%, rgba(255,255,255,0.3) 100%);
     animation-timing-function: linear;
-    box-shadow: 0 0 0.25vw rgba(var(--accent), 0.7);
+    box-shadow: 0 0 0.2vw rgba(255,255,255,0.15);
 }
+
 @keyframes progressBar {
     from { width: 100%; }
     to { width: 0%; }
 }
 
 /* ============================================================
-   KEYBOARD INPUT (glass)
+   KEYBOARD INPUT
    ============================================================ */
 .Overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(3px);
+    background: rgba(0,0,0,0.4);
     z-index: 9998;
 }
+
 .InputWrapper {
     position: fixed;
     left: 50%;
@@ -850,93 +784,107 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(22px) saturate(160%);
-    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
     font-family: 'Inter', sans-serif;
-    border-radius: 0.75vw;
-    border: 0.06vw solid var(--glass-border-strong);
+    border-radius: 0.4vw;
+    border: 0.06vw solid var(--border-accent);
     overflow: hidden;
-    box-shadow:
-        0 1vw 2.5vw rgba(0,0,0,0.75),
-        0 0 0.9vw rgba(var(--accent), 0.3);
+    box-shadow: 0 1vw 2.5vw rgba(0,0,0,0.9), 0 0 0.8vw var(--white-glow);
     z-index: 9999;
 }
+
 .InputWrapper .Header {
+    position: relative;
     display: flex;
     width: 100%;
-    height: 1.35vw;
+    height: 1.3vw;
+    justify-content: flex-start;
     align-items: center;
-    gap: 0.35vw;
-    border-bottom: 0.05vw solid var(--glass-border);
+    flex-direction: row;
+    gap: 0.3vw;
+    border-bottom: 0.05vw solid var(--border-accent);
     font-size: 0.62vw;
+    font-weight: 400;
     color: var(--text-1);
-    background: rgba(0,0,0,0.25);
+    background: rgba(0,0,0,0.4);
 }
+
 .InputWrapper .Header img {
     width: 1.2vw;
     height: 1vw;
-    margin-left: 0.45vw;
+    margin-left: 0.4vw;
     object-fit: contain;
 }
+
 .InputWrapper .Header .Line {
-    width: 0.05vw;
-    height: 0.75vw;
-    background: var(--glass-border-strong);
+    width: 0.04vw;
+    height: 0.7vw;
+    background: var(--border-accent);
 }
+
 .InputWrapper .Header i {
-    margin-left: 0.55vw;
-    color: rgba(var(--accent), 1);
-    font-size: 0.62vw;
+    margin-left: 0.5vw;
+    color: var(--white);
+    font-size: 0.6vw;
 }
+
 .InputWrapper .Header span {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
-    letter-spacing: 0.05vw;
-    color: var(--text-0);
+    letter-spacing: 0.04vw;
+    color: var(--white);
 }
+
 .InputWrapper .Body {
+    position: relative;
     display: flex;
     width: 100%;
-    height: 1.9vw;
+    height: 1.8229vw;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.15);
+    flex-direction: row;
+    background: rgba(0,0,0,0.2);
 }
+
 .InputWrapper .Body .InsideCon {
+    position: absolute;
     display: flex;
     width: 98.25%;
     height: 72%;
-    background: rgba(0,0,0,0.55);
-    border: 0.04vw solid var(--glass-border);
-    border-radius: 0.3vw;
+    background: #0d0d0d;
+    border: 0.04vw solid var(--border-soft);
+    border-radius: 0.2vw;
     justify-content: flex-start;
     align-items: center;
-    box-shadow: inset 0 0.1vw 0.25vw rgba(0,0,0,0.9);
+    box-shadow: inset 0 0.1vw 0.2vw rgba(0,0,0,0.9);
 }
+
 .InputWrapper .Body span {
+    position: absolute;
     display: flex;
-    left: 0.55vw;
+    left: 0.5vw;
     font-size: 0.62vw;
     color: var(--text-0);
     letter-spacing: 0.02vw;
 }
+
 .InputWrapper .Body .InsideCon span::after {
     content: "";
     display: inline-block;
-    width: 0.05vw;
+    width: 0.04vw;
     height: 0.6vw;
-    background: rgba(var(--accent), 1);
-    margin-left: 0.12vw;
+    background: var(--white);
+    margin-left: 0.1vw;
     margin-bottom: 0.05vw;
     animation: blink 1s steps(2, start) infinite;
     align-self: center;
-    box-shadow: 0 0 0.2vw rgba(var(--accent), 0.9);
+    box-shadow: 0 0 0.15vw var(--white-glow);
 }
+
 @keyframes blink { to { visibility: hidden; } }
 
 /* ============================================================
-   KEYBINDS PANEL (glass)
+   KEYBINDS PANEL
    ============================================================ */
 .KBLWrapper {
     position: fixed;
@@ -944,78 +892,90 @@ html, body {
     top: 1.0417vw;
     display: flex;
     width: 7.5vw;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     font-family: 'Inter', sans-serif;
-    border-radius: 0.55vw;
-    border: 0.06vw solid var(--glass-border-strong);
+    border-radius: 0.35vw;
+    border: 0.05vw solid var(--border-accent);
     overflow: hidden;
-    box-shadow:
-        var(--glass-shadow),
-        0 0 0.6vw rgba(var(--accent), 0.25);
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.5vw var(--white-glow);
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
     z-index: 9999;
 }
+
 .KBLWrapper .Header {
+    position: relative;
     display: flex;
     width: 100%;
-    height: 1.1vw;
-    align-items: center;
-    background: rgba(0,0,0,0.35);
-    border-bottom: 0.05vw solid var(--glass-border);
-}
-.KBLWrapper .Header .Icon {
-    margin-left: 0.35vw;
-    color: rgba(var(--accent), 1);
-    filter: drop-shadow(0 0 0.2vw rgba(var(--accent), 0.7));
-}
-.KBLWrapper .Header span {
-    margin-left: 0.25vw;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.64vw;
-    font-weight: 600;
-    letter-spacing: 0.06vw;
-    color: var(--text-0);
-}
-.KBLWrapper .Binds {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 0.12vw;
-    background: rgba(0,0,0,0.12);
-    padding: 0.25vw 0;
-}
-.KBLWrapper .Binds .Keybind {
-    display: flex;
-    width: 96%;
-    height: 0.78vw;
+    height: 1.05vw;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 0.03vw solid rgba(255,255,255,0.04);
-    position: relative;
+    background: rgba(0,0,0,0.5);
+    border-bottom: 0.05vw solid var(--border-accent);
 }
+
+.KBLWrapper .Header .Icon {
+    margin-left: 0.3vw;
+    color: var(--white);
+}
+
+.KBLWrapper .Header span {
+    margin-left: 0.2vw;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.62vw;
+    font-weight: 600;
+    letter-spacing: 0.05vw;
+    color: var(--white);
+}
+
+.KBLWrapper .Binds {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.12vw;
+    background: rgba(0,0,0,0.2);
+    padding: 0.2vw 0;
+}
+
+.KBLWrapper .Binds .Keybind {
+    position: relative;
+    display: flex;
+    width: 96%;
+    height: 0.75vw;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 0.03vw solid rgba(255,255,255,0.03);
+}
+
 .KBLWrapper .Binds .Keybind:last-child { border-bottom: none; }
+
 .KBLWrapper .Binds .Keybind .Label {
     position: absolute;
-    left: 0.25vw;
+    left: 0.2vw;
     font-size: 0.55vw;
     font-weight: 400;
     color: var(--text-2);
 }
+
 .KBLWrapper .Binds .Keybind .Elements {
     position: absolute;
-    right: 0.25vw;
+    right: 0.2vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex-direction: row;
-    gap: 0.25vw;
+    gap: 0.2vw;
 }
+
 .KBLWrapper .Binds .Keybind .Elements span {
     font-size: 0.55vw;
     font-weight: 500;
-    color: var(--text-0);
+    color: var(--white);
     letter-spacing: 0.02vw;
 }
 
@@ -1028,8 +988,8 @@ html, body {
     top: 50%;
     width: 1.25vw;
     transform: translate(-50%, -50%);
-    color: var(--text-0);
-    filter: drop-shadow(0 0 0.3vw rgba(var(--accent-2), 0.9));
+    color: var(--white);
+    filter: drop-shadow(0 0 0.2vw var(--white-glow));
     pointer-events: none;
     z-index: 9997;
 }
@@ -1048,10 +1008,12 @@ html, body {
     align-items: center;
     flex-direction: column;
     font-family: 'Inter', sans-serif;
-    gap: 0.4vw;
+    gap: 0.35vw;
     z-index: 9997;
 }
+
 .FCWrapper .Option {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1061,40 +1023,34 @@ html, body {
     font-weight: 600;
     letter-spacing: 0.06vw;
     color: var(--text-1);
-    text-shadow:
-        0 0 0.25vw rgba(0,0,0,0.95),
-        0 0 0.5vw rgba(0,0,0,0.85),
-        0 0 0.9vw rgba(0,0,0,0.7);
-    transition: opacity 0.3s var(--ease-soft), transform 0.25s var(--ease-spring), color 0.3s var(--ease-soft);
-}
-.FCWrapper .Option.Selected {
-    color: var(--text-0);
-    font-weight: 700;
-    transform: scale(1.06);
-    text-shadow:
-        0 0 0.3vw rgba(var(--accent), 0.9),
-        0 0 0.6vw rgba(0,0,0,0.95),
-        0 0 1vw rgba(0,0,0,0.85);
-}
-.FCWrapper .Option .FCdash {
-    color: rgba(var(--accent-2), 1);
-    font-weight: 700;
-    text-shadow: 0 0 0.3vw rgba(var(--accent-2), 0.9);
-}
-.FCWrapper .Option .CycleHighlight {
-    color: rgba(var(--accent-2), 1);
-    font-weight: 700;
-    letter-spacing: 0.04vw;
-    text-shadow: 0 0 0.35vw rgba(var(--accent-2), 0.9);
+    text-shadow: 0 0 0.2vw rgba(0,0,0,0.9), 0 0 0.4vw rgba(0,0,0,0.8), 0 0 0.7vw rgba(0,0,0,0.6);
+    transition: opacity 0.25s, transform 0.15s;
 }
 
-/* ============================================================
-   GLOBAL SCROLLBAR
-   ============================================================ */
+.FCWrapper .Option.Selected {
+    color: var(--white);
+    font-weight: 700;
+    transform: scale(1.05);
+    text-shadow: 0 0 0.25vw var(--white-glow), 0 0 0.5vw rgba(0,0,0,0.9), 0 0 0.9vw rgba(0,0,0,0.7);
+}
+
+.FCWrapper .Option .FCdash {
+    color: var(--white);
+    font-weight: 700;
+    text-shadow: 0 0 0.25vw var(--white-glow);
+}
+
+.FCWrapper .Option .CycleHighlight {
+    color: var(--white);
+    font-weight: 700;
+    letter-spacing: 0.04vw;
+    text-shadow: 0 0 0.3vw var(--white-glow);
+}
+
 ::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
 
 /* ============================================================
-   DESCRIPTION (glass)
+   DESCRIPTION
    ============================================================ */
 .Desc {
     position: fixed;
@@ -1104,12 +1060,10 @@ html, body {
     display: flex;
     width: auto;
     max-width: 60vw;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-    border: 0.06vw solid var(--glass-border-strong);
-    border-radius: 0.55vw;
-    padding: 0.55vw 0.95vw;
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    border: 0.05vw solid var(--border-accent);
+    border-radius: 0.3vw;
+    padding: 0.5vw 0.9vw;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 0.62vw;
@@ -1117,29 +1071,27 @@ html, body {
     color: var(--text-1);
     justify-content: center;
     align-items: center;
-    box-shadow:
-        var(--glass-shadow),
-        0 0 0.5vw rgba(var(--accent), 0.2);
+    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.5vw var(--white-glow);
     text-align: center;
     z-index: 9996;
 }
+
 .Desc span { color: var(--text-1); }
 .Desc .hazard { color: #ffb020; margin-left: 0.2vw; }
-.Desc .locked { color: #ff4455; margin-left: 0.2vw; }
+.Desc .locked { color: #ff3344; margin-left: 0.2vw; }
 
-/* ============================================================
-   FADE IN/OUT
-   ============================================================ */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(0.5vw); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes fadeOut {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(0.5vw); }
 }
-.fadeIn { animation: fadeIn 0.3s var(--ease-soft); }
-.fadeOut { animation: fadeOut 0.22s var(--ease-soft); }
+
+.fadeIn { animation: fadeIn 0.25s ease-out; }
+.fadeOut { animation: fadeOut 0.2s ease-in; }
 </style>
 </head>
 <body>
@@ -1159,11 +1111,11 @@ html, body {
             <div class="PRightElements">
                 <div class="PCategories" id="categories"></div>
                 <div class="PTabs" id="tabs">
-                    <div class="activeIndicator" id="activeIndicator"></div>
+                    <div class="activeIndicator" id="activeIndicator" style="position:absolute;width:100%;top:0;height:1.5625vw;background:rgba(255,255,255,0.06);border-left:0.05vw solid rgba(255,255,255,0.6);border-radius:0.2vw;z-index:0;transition:top 200ms ease,height 120ms ease;pointer-events:none;"></div>
                 </div>
                 <div class="PFooter">
                     <img src="https://i.postimg.cc/cCM7nm31/1ef3dff8bebea3f343874bed403b059e.webp" alt="">
-                    <span class="PBuild">discord.gg/h2ck : zombie</span>
+                    <span class="PBuild">discord.gg/h2ck : zombie </span>
                     <span class="PIndicator" id="footerIndicator">(0/0)</span>
                 </div>
             </div>
@@ -1270,9 +1222,7 @@ html, body {
             .replace(/'/g, "&#039;");
     }
 
-    function isNumber(v) {
-        return typeof v === "number" && !isNaN(v);
-    }
+    function isNumber(v) { return typeof v === "number" && !isNaN(v); }
 
     function renderCategories() {
         DOM.categories.innerHTML = "";
@@ -1284,9 +1234,7 @@ html, body {
             });
         } else {
             const c = el("div", "PCategory active");
-            c.textContent = State.menuPath.length > 0
-                ? State.menuPath[State.menuPath.length - 1]
-                : "MAIN MENU";
+            c.textContent = State.menuPath.length > 0 ? State.menuPath[State.menuPath.length - 1] : "MAIN MENU";
             DOM.categories.appendChild(c);
         }
     }
@@ -1298,7 +1246,6 @@ html, body {
             if (!tab || !tab.type) return;
             const tabEl = el("div", "PTab" + (i === State.index ? " active" : ""));
             tabEl.dataset.index = i;
-            tabEl.style.animationDelay = (i * 0.018) + "s";
 
             if (tab.type === "divider") {
                 const divider = el("div", "Divider");
@@ -1443,11 +1390,8 @@ html, body {
         const elTop = activeEl.offsetTop;
         const elBottom = elTop + activeEl.offsetHeight;
 
-        if (elTop < containerTop) {
-            container.scrollTop = elTop - 6;
-        } else if (elBottom > containerBottom) {
-            container.scrollTop = elBottom - container.clientHeight + 6;
-        }
+        if (elTop < containerTop) container.scrollTop = elTop - 4;
+        else if (elBottom > containerBottom) container.scrollTop = elBottom - container.clientHeight + 4;
     }
 
     function updateScrollProgress() {
@@ -1473,9 +1417,7 @@ html, body {
 
     function updateFooter() {
         const total = State.elements.filter(e => e && e.type !== "divider").length;
-        const current = State.elements
-            .slice(0, State.index + 1)
-            .filter(e => e && e.type !== "divider").length;
+        const current = State.elements.slice(0, State.index + 1).filter(e => e && e.type !== "divider").length;
         DOM.footerIndicator.textContent = `(${current}/${total})`;
     }
 
@@ -1487,12 +1429,8 @@ html, body {
         }
         DOM.descBox.style.display = "flex";
         let html = escapeHtml(tab.desc);
-        if (tab.hazardous) {
-            html += '<span class="hazard">\u00A0\u26A0\uFE0F Server may detect</span>';
-        }
-        if (tab.locked) {
-            html += '<span class="locked">\u00A0\uD83D\uDD12 Locked</span>';
-        }
+        if (tab.hazardous) html += '<span class="hazard">\u00A0\u26A0\uFE0F Server may detect</span>';
+        if (tab.locked) html += '<span class="locked">\u00A0\uD83D\uDD12 Locked</span>';
         DOM.descText.innerHTML = html;
     }
 
@@ -1520,9 +1458,7 @@ html, body {
             const val = el("div", "Val");
             const valSpan = el("span");
             valSpan.textContent = md.value !== undefined ? String(md.value) : "";
-            if (md.key === "Weapons" || md.key === "الأسلحة") {
-                valSpan.style.color = "#ff4455";
-            }
+            if (md.key === "Weapons" || md.key === "الأسلحة") valSpan.style.color = "#ff4455";
             val.appendChild(valSpan);
 
             if ((md.key === "Health" || md.key === "Armour" ||
@@ -1554,7 +1490,7 @@ html, body {
             : "fa-circle-info";
         const iconColor = type === "success" ? "#4ade80"
             : type === "error" ? "#ff4455"
-            : "rgb(var(--accent))";
+            : "#ffffff";
 
         const icon = el("i", "fa-solid " + iconName);
         icon.style.color = iconColor;
@@ -1565,7 +1501,7 @@ html, body {
         t.textContent = title || "Notification";
         t.style.color = type === "success" ? "#4ade80"
             : type === "error" ? "#ff4455"
-            : "var(--text-0)";
+            : "var(--white)";
         content.appendChild(t);
         if (desc) {
             const d = el("div", "NotificationDesc");
@@ -1576,8 +1512,7 @@ html, body {
 
         const prog = el("div", "NotificationProgress");
         prog.style.animation = `progressBar ${duration}ms linear forwards`;
-        if (type === "success") prog.style.background = "linear-gradient(90deg,#4ade80,rgba(74,222,128,0.3))";
-        else if (type === "error") prog.style.background = "linear-gradient(90deg,#ff4455,rgba(255,68,85,0.3))";
+        prog.style.backgroundColor = iconColor;
         notif.appendChild(prog);
 
         DOM.notifications.appendChild(notif);
@@ -1626,7 +1561,7 @@ html, body {
             if (isToggle) {
                 const statusSpan = el("span");
                 statusSpan.textContent = bind.checked ? "ON" : "OFF";
-                statusSpan.style.color = bind.checked ? "var(--text-0)" : "rgba(255,255,255,0.35)";
+                statusSpan.style.color = bind.checked ? "var(--white)" : "rgba(255,255,255,0.35)";
                 elements.appendChild(statusSpan);
             }
             row.appendChild(elements);
@@ -1702,7 +1637,7 @@ html, body {
                 DOM.metadata.style.display = "none";
                 DOM.descBox.style.display = "none";
             }
-        }, 240);
+        }, 220);
     }
 
     window.addEventListener("message", function(event) {
@@ -1780,13 +1715,7 @@ html, body {
             case "updateBanner": {
                 if (data.bannerLink) DOM.bannerImg.src = data.bannerLink;
                 if (data.bannerColor) {
-                    const hex = String(data.bannerColor).replace("#","");
-                    const r = parseInt(hex.substring(0,2),16);
-                    const g = parseInt(hex.substring(2,4),16);
-                    const b = parseInt(hex.substring(4,6),16);
-                    if (!isNaN(r) && !isNaN(g) && !isNaN(b)) {
-                        document.documentElement.style.setProperty("--accent", `${r}, ${g}, ${b}`);
-                    }
+                    document.documentElement.style.setProperty("--menu-color", data.bannerColor);
                 }
                 break;
             }
@@ -1795,6 +1724,7 @@ html, body {
                 if (data.x === "Left") root.style.setProperty("--menu-x", "3vw");
                 else if (data.x === "Center") root.style.setProperty("--menu-x", "50vw");
                 else if (data.x === "Right") root.style.setProperty("--menu-x", "85vw");
+
                 if (data.y === "Top") root.style.setProperty("--menu-y", "5vh");
                 else if (data.y === "Middle") root.style.setProperty("--menu-y", "50vh");
                 else if (data.y === "Bottom") root.style.setProperty("--menu-y", "85vh");
@@ -1844,7 +1774,7 @@ html, body {
         updateActiveIndicator();
     });
 
-    console.log("[zombie] glass UI ready.");
+    console.log("[zombie] UI ready.");
 })();
 </script>
 </body>
