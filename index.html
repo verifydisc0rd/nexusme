@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zombie · glass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+    --accent: 139, 92, 246;
+    --accent-2: 34, 211, 238;
+    --menu-x: 3vw;
+    --menu-y: 5vh;
+
+    --glass-bg: rgba(16, 16, 22, 0.55);
+    --glass-bg-strong: rgba(20, 20, 28, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-border-strong: rgba(255, 255, 255, 0.20);
+    --glass-highlight: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 0.6vw 2vw rgba(0, 0, 0, 0.55);
+
+    --text-0: #ffffff;
+    --text-1: rgba(255, 255, 255, 0.92);
+    --text-2: rgba(255, 255, 255, 0.62);
+    --text-3: rgba(255, 255, 255, 0.35);
+
+    --ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    background: transparent !important;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--text-1);
+}
+
+#root {
+    height: 100%;
+    background: transparent !important;
+    pointer-events: none;
+    position: relative;
+}
+
+/* ============================================================
+   MAIN WRAPPER
+   ============================================================ */
+.PWrapper {
+    position: absolute;
+    display: flex;
+    left: var(--menu-x);
+    top: var(--menu-y);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    filter: drop-shadow(0 0.8vw 2vw rgba(0, 0, 0, 0.45));
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(0.6vw) scale(0.985);
+    transition: opacity 0.35s var(--ease-soft), transform 0.5s var(--ease-spring);
+}
+.PWrapper.fadeIn {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ============================================================
+   BANNER (glass + reflection)
+   ============================================================ */
+.PWrapper .PBanner {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 6.2vw;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 0.9vw;
+    border-top-right-radius: 0.9vw;
+    overflow: hidden;
+    border: 0.06vw solid var(--glass-border-strong);
+    border-bottom: none;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 40%, rgba(0,0,0,0.35) 100%),
+        linear-gradient(180deg, var(--glass-bg-strong), var(--glass-bg));
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+.PWrapper .PBanner::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+.PWrapper .PBanner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(10,10,14,0.85) 100%);
+    pointer-events: none;
+}
+.PWrapper .PBanner img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.85;
+    transition: opacity 0.4s var(--ease-soft);
+}
+
+/* ============================================================
+   ELEMENTS ROW
+   ============================================================ */
+.PWrapper .PElements {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+    gap: 0.28vw;
+}
+
+/* ============================================================
+   SCROLLBAR (glass pill)
+   ============================================================ */
+.PWrapper .PElements .PScroll {
+    position: absolute;
+    display: flex;
+    right: -0.95vw;
+    top: 0;
+    width: 0.55vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.15vw;
+    border-radius: 999vw;
+    border: 0.05vw solid var(--glass-border);
+    box-shadow: inset 0 0 0.3vw rgba(0,0,0,0.7);
+}
+.PWrapper .PElements .PScroll i {
+    font-size: 0.55vw;
+    color: var(--text-3);
+    margin: 0.12vw 0;
+    transition: color 0.25s var(--ease-soft);
+}
+.PWrapper .PElements .PScroll:hover i { color: var(--text-0); }
+
+.PWrapper .PElements .PScroll .PSProgressWrapper {
+    position: relative;
+    display: flex;
+    width: 0.28vw;
+    height: 90%;
+    justify-content: center;
+    align-items: flex-start;
+}
+.PWrapper .PElements .PScroll .PSProgress {
+    position: relative;
+    display: flex;
+    width: 0.28vw;
+    margin-top: 0.15vw;
+    background: linear-gradient(180deg,
+        rgba(var(--accent), 1) 0%,
+        rgba(var(--accent-2), 0.85) 100%);
+    border-radius: 999vw;
+    box-shadow:
+        0 0 0.4vw rgba(var(--accent), 0.55),
+        0 0 0.18vw rgba(var(--accent-2), 0.4);
+    transition: top 0.35s var(--ease-spring), height 0.35s var(--ease-spring);
+}
+
+/* ============================================================
+   RIGHT SIDE
+   ============================================================ */
+.PWrapper .PElements .PRightElements {
+    position: relative;
+    display: flex;
+    width: 19.0104vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* ============================================================
+   CATEGORIES (glass header)
+   ============================================================ */
+.PWrapper .PCategories {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 1.5625vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border-left: 0.06vw solid var(--glass-border-strong);
+    border-right: 0.06vw solid var(--glass-border-strong);
+    border-bottom: 0.06vw solid var(--glass-border);
+    overflow: hidden;
+}
+.PWrapper .PCategories::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+    pointer-events: none;
+}
+.PWrapper .PCategories .PCategory {
+    position: relative;
+    display: flex;
+    flex: 1;
+    text-align: center;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.74vw;
+    font-weight: 500;
+    letter-spacing: 0.03vw;
+    color: var(--text-2);
+    transition: color 0.3s var(--ease-soft), background 0.3s var(--ease-soft);
+    cursor: default;
+}
+.PWrapper .PCategories .PCategory.active {
+    color: var(--text-0);
+    background: linear-gradient(0deg, rgba(var(--accent), 0.16) 0%, transparent 100%);
+    box-shadow: inset 0 -0.06vw 0 0 rgba(var(--accent), 0.9);
+}
+.PWrapper .PCategories .PCategory:only-child {
+    position: absolute;
+    left: 0;
+    padding: 0 0.9vw;
+    justify-content: flex-start;
+    font-size: 0.72vw;
+}
+
+/* ============================================================
+   TABS (glass container)
+   ============================================================ */
+.PWrapper .PTabs {
+    position: relative;
+    display: flex;
+    width: 19.0104vw;
+    height: auto;
+    max-height: 14.0625vw;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-left: 0.06vw solid var(--glass-border-strong);
+    border-right: 0.06vw solid var(--glass-border-strong);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.28vw 0;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.PWrapper .PTabs::-webkit-scrollbar { display: none; }
+
+/* ACTIVE INDICATOR — glass pill sliding smoothly */
+.PWrapper .PTabs .activeIndicator {
+    position: absolute;
+    width: calc(100% - 0.5vw);
+    left: 0.25vw;
+    top: 0;
+    height: 1.5625vw;
+    background:
+        linear-gradient(90deg,
+            rgba(var(--accent), 0.18) 0%,
+            rgba(var(--accent-2), 0.10) 100%);
+    border: 0.05vw solid rgba(var(--accent), 0.55);
+    border-radius: 0.35vw;
+    box-shadow:
+        0 0 0.6vw rgba(var(--accent), 0.35),
+        inset 0 0 0.4vw rgba(var(--accent), 0.15);
+    z-index: 0;
+    pointer-events: none;
+    transition:
+        top 0.38s var(--ease-spring),
+        height 0.24s var(--ease-spring),
+        box-shadow 0.3s var(--ease-soft);
+}
+
+/* ============================================================
+   TAB ROW
+   ============================================================ */
+.PWrapper .PTabs .PTab {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 1.5625vw;
+    min-height: 1.5625vw;
+    max-height: 1.5625vw;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.25s var(--ease-spring), background 0.3s var(--ease-soft);
+    border-bottom: 0.04vw solid rgba(255,255,255,0.025);
+    z-index: 1;
+}
+.PWrapper .PTabs .PTab:hover {
+    background: rgba(255,255,255,0.04);
+}
+.PWrapper .PTabs .PTab.active {
+    background: transparent;
+}
+
+/* subtle blur on non-active, sharp on active */
+.PWrapper .PTabs .PTab .PTLabel,
+.PWrapper .PTabs .PTab .Checkbox,
+.PWrapper .PTabs .PTab .Slider,
+.PWrapper .PTabs .PTab .TOptions,
+.PWrapper .PTabs .PTab .Scrollable,
+.PWrapper .PTabs .PTab .Divider {
+    filter: blur(0.3px);
+    opacity: 0.86;
+    transition: filter 0.3s var(--ease-soft), opacity 0.3s var(--ease-soft);
+}
+.PWrapper .PTabs .PTab:hover .PTLabel,
+.PWrapper .PTabs .PTab:hover .Checkbox,
+.PWrapper .PTabs .PTab:hover .Slider,
+.PWrapper .PTabs .PTab:hover .TOptions,
+.PWrapper .PTabs .PTab:hover .Scrollable,
+.PWrapper .PTabs .PTab:hover .Divider,
+.PWrapper .PTabs .PTab.active .PTLabel,
+.PWrapper .PTabs .PTab.active .Checkbox,
+.PWrapper .PTabs .PTab.active .Slider,
+.PWrapper .PTabs .PTab.active .TOptions,
+.PWrapper .PTabs .PTab.active .Scrollable,
+.PWrapper .PTabs .PTab.active .Divider {
+    filter: blur(0);
+    opacity: 1;
+}
+
+/* stagger fade-in of tabs */
+.PWrapper .PTabs .PTab {
+    animation: tabIn 0.4s var(--ease-spring) both;
+}
+@keyframes tabIn {
+    from { opacity: 0; transform: translateX(-0.4vw); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.PWrapper .PTabs .PTab .PTLabel {
+    position: absolute;
+    display: flex;
+    left: 0.7vw;
+    width: 62%;
+    height: 60%;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.63vw;
+    font-weight: 400;
+    letter-spacing: 0.015vw;
+    color: var(--text-1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.25s var(--ease-soft), letter-spacing 0.25s var(--ease-soft);
+}
+.PWrapper .PTabs .PTab.active .PTLabel {
+    color: var(--text-0);
+    font-weight: 500;
+    letter-spacing: 0.02vw;
+}
+.PWrapper .PTabs .PTab i.fa-angle-right {
+    position: absolute;
+    display: flex;
+    right: 0.75vw;
+    font-size: 0.55vw;
+    color: var(--text-3);
+    transition: color 0.25s var(--ease-soft), transform 0.25s var(--ease-spring);
+}
+.PWrapper .PTabs .PTab.active i.fa-angle-right,
+.PWrapper .PTabs .PTab:hover i.fa-angle-right {
+    color: var(--text-0);
+    transform: translateX(0.1vw);
+}
+
+/* ============================================================
+   CHECKBOX (glass pill)
+   ============================================================ */
+.PWrapper .PTabs .PTab .Checkbox {
+    position: absolute;
+    right: 0.75vw;
+    display: flex;
+    width: 1.5625vw;
+    height: 0.7813vw;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(0,0,0,0.35);
+    border: 0.05vw solid var(--glass-border);
+    border-radius: 999vw;
+    transition: background 0.35s var(--ease-soft), border-color 0.35s var(--ease-soft), box-shadow 0.35s var(--ease-soft);
+    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+}
+.PWrapper .PTabs .PTab .Checkbox.Checked {
+    background: rgba(var(--accent), 0.55);
+    border-color: rgba(var(--accent), 0.9);
+    box-shadow:
+        inset 0 0.05vw 0.15vw rgba(0,0,0,0.4),
+        0 0 0.55vw rgba(var(--accent), 0.65);
+}
+.PWrapper .PTabs .PTab .Checkbox .Inside {
+    position: absolute;
+    left: 0.13vw;
+    width: 0.45vw;
+    height: 0.45vw;
+    background: linear-gradient(180deg, #ffffff 0%, #c8c8c8 100%);
+    border-radius: 999vw;
+    box-shadow:
+        0 0.05vw 0.1vw rgba(0,0,0,0.7),
+        inset 0 0.03vw 0.06vw rgba(255,255,255,0.9);
+    transition: left 0.35s var(--ease-spring), background 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+}
+.PWrapper .PTabs .PTab .Checkbox.Checked .Inside {
+    left: 0.95vw;
+    background: linear-gradient(180deg, #ffffff 0%, #eaeaea 100%);
+    box-shadow:
+        0 0.05vw 0.1vw rgba(0,0,0,0.7),
+        0 0 0.25vw rgba(255,255,255,0.7);
+}
+
+/* ============================================================
+   SLIDER (glass)
+   ============================================================ */
+.PWrapper .PTabs .PTab .Slider {
+    position: absolute;
+    right: 0.75vw;
+    display: flex;
+    width: 2.3438vw;
+    height: 0.22vw;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(0,0,0,0.35);
+    border: 0.05vw solid var(--glass-border);
+    border-radius: 999vw;
+    box-shadow: inset 0 0.06vw 0.12vw rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    overflow: visible;
+}
+.PWrapper .PTabs .PTab .Slider .Progress {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    background: linear-gradient(90deg,
+        rgba(var(--accent), 0.55) 0%,
+        rgba(var(--accent-2), 0.95) 100%);
+    border-radius: 999vw;
+    box-shadow: 0 0 0.35vw rgba(var(--accent), 0.55);
+    transition: width 0.28s var(--ease-spring);
+}
+.PWrapper .PTabs .PTab .Slider .Progress .Thumb {
+    position: absolute;
+    right: -0.1vw;
+    width: 0.44vw;
+    height: 0.44vw;
+    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #d0d0d0 100%);
+    border-radius: 999vw;
+    box-shadow:
+        0 0.05vw 0.15vw rgba(0,0,0,0.8),
+        0 0 0.3vw rgba(var(--accent-2), 0.8);
+    transition: box-shadow 0.3s var(--ease-soft);
+}
+.PWrapper .PTabs .PTab.active .Slider .Progress .Thumb {
+    box-shadow:
+        0 0.05vw 0.15vw rgba(0,0,0,0.8),
+        0 0 0.5vw rgba(var(--accent-2), 1);
+}
+
+/* ============================================================
+   TOptions
+   ============================================================ */
+.PWrapper .PTabs .PTab .TOptions {
+    position: absolute;
+    right: 0.75vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.55vw;
+}
+.PWrapper .PTabs .PTab .TOptions .Slider {
+    position: relative;
+    right: auto;
+}
+.PWrapper .PTabs .PTab .TOptions .Checkbox {
+    position: relative;
+    right: auto;
+}
+
+/* ============================================================
+   SCROLLABLE
+   ============================================================ */
+.PWrapper .PTabs .PTab .Scrollable {
+    position: absolute;
+    right: 0.75vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.35vw;
+    font-size: 0.6vw;
+    font-weight: 500;
+    color: var(--text-0);
+    letter-spacing: 0.02vw;
+}
+.PWrapper .PTabs .PTab .Scrollable span:first-child,
+.PWrapper .PTabs .PTab .Scrollable span:last-child {
+    color: var(--text-3);
+    font-weight: 400;
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.PWrapper .PTabs .PTab .Divider {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    width: 92%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.45vw;
+}
+.PWrapper .PTabs .PTab .Divider .Left,
+.PWrapper .PTabs .PTab .Divider .Right {
+    flex: 1;
+    height: 0.05vw;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--accent), 0.55) 50%, transparent 100%);
+}
+.PWrapper .PTabs .PTab .Divider .Label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7vw;
+    font-weight: 600;
+    letter-spacing: 0.1vw;
+    color: var(--text-0);
+    white-space: nowrap;
+    padding: 0 0.45vw;
+    text-transform: uppercase;
+    opacity: 0.9;
+    text-shadow: 0 0 0.4vw rgba(var(--accent), 0.6);
+}
+
+/* ============================================================
+   FOOTER (glass)
+   ============================================================ */
+.PWrapper .PFooter {
+    position: relative;
+    display: flex;
+    width: 19.0104vw;
+    height: 1.5625vw;
+    justify-content: center;
+    align-items: center;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border-left: 0.06vw solid var(--glass-border-strong);
+    border-right: 0.06vw solid var(--glass-border-strong);
+    border-bottom: 0.06vw solid var(--glass-border-strong);
+    border-bottom-left-radius: 0.9vw;
+    border-bottom-right-radius: 0.9vw;
+    overflow: hidden;
+}
+.PWrapper .PFooter::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(var(--accent), 0.6), transparent);
+}
+.PWrapper .PFooter img {
+    position: absolute;
+    left: 0.55vw;
+    width: 0.9vw;
+    height: 0.9vw;
+    object-fit: contain;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 0.15vw rgba(var(--accent), 0.8));
+}
+.PWrapper .PFooter .PBuild {
+    position: absolute;
+    left: 1.75vw;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72vw;
+    font-weight: 600;
+    letter-spacing: 0.05vw;
+    color: var(--text-0);
+}
+.PWrapper .PFooter .PIndicator {
+    position: absolute;
+    right: 0.6vw;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58vw;
+    font-weight: 400;
+    color: var(--text-3);
+    letter-spacing: 0.02vw;
+}
+
+/* ============================================================
+   METADATA PANEL (glass)
+   ============================================================ */
+.PWrapper .Metadata {
+    position: absolute;
+    display: flex;
+    width: 13.8021vw;
+    right: -15.65vw;
+    top: -5.45vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25vw;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 0.06vw solid var(--glass-border-strong);
+    border-radius: 0.65vw;
+    padding: 0.65vw 0.55vw;
+    box-shadow:
+        var(--glass-shadow),
+        0 0 0.8vw rgba(var(--accent), 0.25),
+        inset 0 0 0.5vw rgba(0,0,0,0.4);
+}
+.PWrapper .Metadata .Title {
+    display: flex;
+    width: 98%;
+    height: 0.9vw;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-0);
+}
+.PWrapper .Metadata .Title span {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88vw;
+    font-weight: 600;
+    letter-spacing: 0.05vw;
+    text-align: center;
+    text-shadow: 0 0 0.4vw rgba(var(--accent), 0.6);
+}
+.PWrapper .Metadata .Line {
+    width: 98%;
+    height: 0.03vw;
+    margin-top: 0.15vw;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--accent), 0.65) 50%, transparent 100%);
+}
+.PWrapper .Metadata .Values {
+    display: flex;
+    width: 98%;
+    margin-top: 0.3vw;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.22vw;
+}
+.PWrapper .Metadata .Values .Value {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.08vw 0;
+    border-bottom: 0.03vw solid rgba(255,255,255,0.04);
+}
+.PWrapper .Metadata .Values .Value:last-child { border-bottom: none; }
+.PWrapper .Metadata .Values .Value .Key {
+    display: flex;
+    height: 0.85vw;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58vw;
+    font-weight: 300;
+    letter-spacing: 0.03vw;
+    color: var(--text-2);
+    text-transform: uppercase;
+}
+.PWrapper .Metadata .Values .Value .Val {
+    position: absolute;
+    right: 0.55vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.3vw;
+}
+.PWrapper .Metadata .Values .Value .Val span {
+    height: 0.85vw;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58vw;
+    font-weight: 500;
+    color: var(--text-0);
+    display: flex;
+    align-items: center;
+}
+.PWrapper .Metadata .Values .Value .Val .Status {
+    display: flex;
+    width: 0.22vw;
+    height: 0.85vw;
+    background: rgba(0,0,0,0.55);
+    border-radius: 0.12vw;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    border: 0.03vw solid var(--glass-border);
+}
+.PWrapper .Metadata .Values .Value .Val .Status .Progress {
+    width: 100%;
+    bottom: 0;
+    transition: height 0.35s var(--ease-spring);
+}
+
+/* ============================================================
+   NOTIFICATIONS (glass)
+   ============================================================ */
+.NotificationsWrapper {
+    position: fixed;
+    bottom: 0.9vw;
+    right: 0.9vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55vw;
+    z-index: 9999;
+    pointer-events: none;
+}
+.Notification {
+    position: relative;
+    width: 18vw;
+    padding: 0.75vw 0.95vw;
+    display: flex;
+    align-items: center;
+    gap: 0.65vw;
+    pointer-events: auto;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 0.06vw solid var(--glass-border-strong);
+    border-radius: 0.55vw;
+    box-shadow:
+        var(--glass-shadow),
+        0 0 0.6vw rgba(var(--accent), 0.25),
+        inset 0 0 0.4vw rgba(0,0,0,0.4);
+    color: var(--text-1);
+    font-family: 'Inter', sans-serif;
+    opacity: 0;
+    transform: translateY(1.2vw) translateX(140%);
+    transition: opacity 0.35s var(--ease-soft), transform 0.7s var(--ease-spring);
+    overflow: hidden;
+}
+.Notification::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+}
+.Notification.enter {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+}
+.Notification.exit {
+    opacity: 0;
+    transform: translateY(1.2vw) translateX(30%);
+}
+.Notification i {
+    font-size: 1vw;
+    flex-shrink: 0;
+    color: var(--text-0);
+    filter: drop-shadow(0 0 0.25vw rgba(255,255,255,0.5));
+}
+.Notification .NotificationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1vw;
+    flex: 1;
+    min-width: 0;
+}
+.Notification .NotificationTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.84vw;
+    font-weight: 600;
+    letter-spacing: 0.04vw;
+    color: var(--text-0);
+}
+.Notification .NotificationDesc {
+    font-size: 0.6vw;
+    color: var(--text-2);
+    word-break: break-word;
+    line-height: 1.35;
+}
+.Notification .NotificationProgress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 0.16vw;
+    width: 100%;
+    background: linear-gradient(90deg,
+        rgba(var(--accent), 1) 0%,
+        rgba(var(--accent-2), 0.7) 100%);
+    animation-timing-function: linear;
+    box-shadow: 0 0 0.25vw rgba(var(--accent), 0.7);
+}
+@keyframes progressBar {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* ============================================================
+   KEYBOARD INPUT (glass)
+   ============================================================ */
+.Overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
+    z-index: 9998;
+}
+.InputWrapper {
+    position: fixed;
+    left: 50%;
+    bottom: 8vw;
+    transform: translateX(-50%);
+    width: 26.0417vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    font-family: 'Inter', sans-serif;
+    border-radius: 0.75vw;
+    border: 0.06vw solid var(--glass-border-strong);
+    overflow: hidden;
+    box-shadow:
+        0 1vw 2.5vw rgba(0,0,0,0.75),
+        0 0 0.9vw rgba(var(--accent), 0.3);
+    z-index: 9999;
+}
+.InputWrapper .Header {
+    display: flex;
+    width: 100%;
+    height: 1.35vw;
+    align-items: center;
+    gap: 0.35vw;
+    border-bottom: 0.05vw solid var(--glass-border);
+    font-size: 0.62vw;
+    color: var(--text-1);
+    background: rgba(0,0,0,0.25);
+}
+.InputWrapper .Header img {
+    width: 1.2vw;
+    height: 1vw;
+    margin-left: 0.45vw;
+    object-fit: contain;
+}
+.InputWrapper .Header .Line {
+    width: 0.05vw;
+    height: 0.75vw;
+    background: var(--glass-border-strong);
+}
+.InputWrapper .Header i {
+    margin-left: 0.55vw;
+    color: rgba(var(--accent), 1);
+    font-size: 0.62vw;
+}
+.InputWrapper .Header span {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.05vw;
+    color: var(--text-0);
+}
+.InputWrapper .Body {
+    display: flex;
+    width: 100%;
+    height: 1.9vw;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.15);
+}
+.InputWrapper .Body .InsideCon {
+    display: flex;
+    width: 98.25%;
+    height: 72%;
+    background: rgba(0,0,0,0.55);
+    border: 0.04vw solid var(--glass-border);
+    border-radius: 0.3vw;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: inset 0 0.1vw 0.25vw rgba(0,0,0,0.9);
+}
+.InputWrapper .Body span {
+    display: flex;
+    left: 0.55vw;
+    font-size: 0.62vw;
+    color: var(--text-0);
+    letter-spacing: 0.02vw;
+}
+.InputWrapper .Body .InsideCon span::after {
+    content: "";
+    display: inline-block;
+    width: 0.05vw;
+    height: 0.6vw;
+    background: rgba(var(--accent), 1);
+    margin-left: 0.12vw;
+    margin-bottom: 0.05vw;
+    animation: blink 1s steps(2, start) infinite;
+    align-self: center;
+    box-shadow: 0 0 0.2vw rgba(var(--accent), 0.9);
+}
+@keyframes blink { to { visibility: hidden; } }
+
+/* ============================================================
+   KEYBINDS PANEL (glass)
+   ============================================================ */
+.KBLWrapper {
+    position: fixed;
+    right: 1.0417vw;
+    top: 1.0417vw;
+    display: flex;
+    width: 7.5vw;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    border-radius: 0.55vw;
+    border: 0.06vw solid var(--glass-border-strong);
+    overflow: hidden;
+    box-shadow:
+        var(--glass-shadow),
+        0 0 0.6vw rgba(var(--accent), 0.25);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    z-index: 9999;
+}
+.KBLWrapper .Header {
+    display: flex;
+    width: 100%;
+    height: 1.1vw;
+    align-items: center;
+    background: rgba(0,0,0,0.35);
+    border-bottom: 0.05vw solid var(--glass-border);
+}
+.KBLWrapper .Header .Icon {
+    margin-left: 0.35vw;
+    color: rgba(var(--accent), 1);
+    filter: drop-shadow(0 0 0.2vw rgba(var(--accent), 0.7));
+}
+.KBLWrapper .Header span {
+    margin-left: 0.25vw;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.64vw;
+    font-weight: 600;
+    letter-spacing: 0.06vw;
+    color: var(--text-0);
+}
+.KBLWrapper .Binds {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.12vw;
+    background: rgba(0,0,0,0.12);
+    padding: 0.25vw 0;
+}
+.KBLWrapper .Binds .Keybind {
+    display: flex;
+    width: 96%;
+    height: 0.78vw;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 0.03vw solid rgba(255,255,255,0.04);
+    position: relative;
+}
+.KBLWrapper .Binds .Keybind:last-child { border-bottom: none; }
+.KBLWrapper .Binds .Keybind .Label {
+    position: absolute;
+    left: 0.25vw;
+    font-size: 0.55vw;
+    font-weight: 400;
+    color: var(--text-2);
+}
+.KBLWrapper .Binds .Keybind .Elements {
+    position: absolute;
+    right: 0.25vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.25vw;
+}
+.KBLWrapper .Binds .Keybind .Elements span {
+    font-size: 0.55vw;
+    font-weight: 500;
+    color: var(--text-0);
+    letter-spacing: 0.02vw;
+}
+
+/* ============================================================
+   CROSSHAIR
+   ============================================================ */
+.Crosshair {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 1.25vw;
+    transform: translate(-50%, -50%);
+    color: var(--text-0);
+    filter: drop-shadow(0 0 0.3vw rgba(var(--accent-2), 0.9));
+    pointer-events: none;
+    z-index: 9997;
+}
+
+/* ============================================================
+   FREECAM OPTIONS
+   ============================================================ */
+.FCWrapper {
+    position: fixed;
+    left: 50%;
+    bottom: 4vw;
+    max-height: 13.0208vw;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    gap: 0.4vw;
+    z-index: 9997;
+}
+.FCWrapper .Option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05vw;
+    font-weight: 600;
+    letter-spacing: 0.06vw;
+    color: var(--text-1);
+    text-shadow:
+        0 0 0.25vw rgba(0,0,0,0.95),
+        0 0 0.5vw rgba(0,0,0,0.85),
+        0 0 0.9vw rgba(0,0,0,0.7);
+    transition: opacity 0.3s var(--ease-soft), transform 0.25s var(--ease-spring), color 0.3s var(--ease-soft);
+}
+.FCWrapper .Option.Selected {
+    color: var(--text-0);
+    font-weight: 700;
+    transform: scale(1.06);
+    text-shadow:
+        0 0 0.3vw rgba(var(--accent), 0.9),
+        0 0 0.6vw rgba(0,0,0,0.95),
+        0 0 1vw rgba(0,0,0,0.85);
+}
+.FCWrapper .Option .FCdash {
+    color: rgba(var(--accent-2), 1);
+    font-weight: 700;
+    text-shadow: 0 0 0.3vw rgba(var(--accent-2), 0.9);
+}
+.FCWrapper .Option .CycleHighlight {
+    color: rgba(var(--accent-2), 1);
+    font-weight: 700;
+    letter-spacing: 0.04vw;
+    text-shadow: 0 0 0.35vw rgba(var(--accent-2), 0.9);
+}
+
+/* ============================================================
+   GLOBAL SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
+
+/* ============================================================
+   DESCRIPTION (glass)
+   ============================================================ */
+.Desc {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5vw;
+    transform: translateX(-50%);
+    display: flex;
+    width: auto;
+    max-width: 60vw;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 0.06vw solid var(--glass-border-strong);
+    border-radius: 0.55vw;
+    padding: 0.55vw 0.95vw;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.62vw;
+    letter-spacing: 0.02vw;
+    color: var(--text-1);
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+        var(--glass-shadow),
+        0 0 0.5vw rgba(var(--accent), 0.2);
+    text-align: center;
+    z-index: 9996;
+}
+.Desc span { color: var(--text-1); }
+.Desc .hazard { color: #ffb020; margin-left: 0.2vw; }
+.Desc .locked { color: #ff4455; margin-left: 0.2vw; }
+
+/* ============================================================
+   FADE IN/OUT
+   ============================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(0.5vw); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(0.5vw); }
+}
+.fadeIn { animation: fadeIn 0.3s var(--ease-soft); }
+.fadeOut { animation: fadeOut 0.22s var(--ease-soft); }
+</style>
+</head>
+<body>
+<div id="root">
+    <div class="PWrapper" id="menuWrapper" style="visibility: hidden;">
+        <div class="PBanner">
+            <img id="bannerImg" src="https://i.postimg.cc/63Wfjhfg/60555fdf-8704-4a32-a1cf-0b864d4439a2.png" draggable="false" alt="">
+        </div>
+        <div class="PElements">
+            <div class="PScroll">
+                <i class="fa-solid fa-angle-up"></i>
+                <div class="PSProgressWrapper">
+                    <div class="PSProgress" id="psProgress" style="height: 97%; top: 0%;"></div>
+                </div>
+                <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="PRightElements">
+                <div class="PCategories" id="categories"></div>
+                <div class="PTabs" id="tabs">
+                    <div class="activeIndicator" id="activeIndicator"></div>
+                </div>
+                <div class="PFooter">
+                    <img src="https://i.postimg.cc/cCM7nm31/1ef3dff8bebea3f343874bed403b059e.webp" alt="">
+                    <span class="PBuild">discord.gg/h2ck : zombie</span>
+                    <span class="PIndicator" id="footerIndicator">(0/0)</span>
+                </div>
+            </div>
+        </div>
+        <div class="Metadata" id="metadata" style="display:none;"></div>
+    </div>
+
+    <div class="NotificationsWrapper" id="notifications"></div>
+
+    <div id="keyboardInput" style="display:none;">
+        <div class="Overlay"></div>
+        <div class="InputWrapper">
+            <div class="Header">
+                <img src="https://i.postimg.cc/cCM7nm31/1ef3dff8bebea3f343874bed403b059e.webp" alt="">
+                <div class="Line"></div>
+                <i class="fa-solid fa-keyboard"></i>
+                <span id="keyboardTitle">Keyboard Input</span>
+            </div>
+            <div class="Body">
+                <div class="InsideCon">
+                    <span id="keyboardValue"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="KBLWrapper" id="keybindsPanel" style="display:none;">
+        <div class="Header">
+            <i class="fa-solid fa-keyboard Icon"></i>
+            <span>BINDS</span>
+        </div>
+        <div class="Binds" id="keybindsList"></div>
+    </div>
+
+    <img class="Crosshair" id="crosshair" src="https://files.catbox.moe/cm9g47.png" draggable="false" alt="" style="display:none;">
+
+    <div class="FCWrapper" id="freecamOptions" style="display:none;"></div>
+
+    <div class="Desc" id="descBox" style="display:none;">
+        <span id="descText"></span>
+    </div>
+</div>
+
+<script>
+(function() {
+    "use strict";
+
+    const State = {
+        visible: false,
+        elements: [],
+        index: 0,
+        categories: null,
+        categoryIndex: 0,
+        menuPath: [],
+        username: "discord.gg/h2ck : zombie",
+        freecamVisible: false,
+        freecamWeapons: [],
+        freecamVehicles: [],
+        freecamWeaponIndex: 0,
+        freecamVehicleIndex: 0,
+        freecamOptions: [
+            "Default", "Teleport", "Shoot Weapon", "Spawn Vehicle",
+            "Kick from Vehicle", "Hijack Vehicle", "Delete Vehicle"
+        ],
+        freecamOptionIndex: 0,
+        notificationId: 0
+    };
+
+    const DOM = {
+        wrapper: document.getElementById("menuWrapper"),
+        tabs: document.getElementById("tabs"),
+        categories: document.getElementById("categories"),
+        activeIndicator: document.getElementById("activeIndicator"),
+        footerIndicator: document.getElementById("footerIndicator"),
+        metadata: document.getElementById("metadata"),
+        notifications: document.getElementById("notifications"),
+        keyboardInput: document.getElementById("keyboardInput"),
+        keyboardTitle: document.getElementById("keyboardTitle"),
+        keyboardValue: document.getElementById("keyboardValue"),
+        keybindsPanel: document.getElementById("keybindsPanel"),
+        keybindsList: document.getElementById("keybindsList"),
+        crosshair: document.getElementById("crosshair"),
+        freecamOptions: document.getElementById("freecamOptions"),
+        descBox: document.getElementById("descBox"),
+        descText: document.getElementById("descText"),
+        bannerImg: document.getElementById("bannerImg"),
+        psProgress: document.getElementById("psProgress")
+    };
+
+    function el(tag, className, html) {
+        const e = document.createElement(tag);
+        if (className) e.className = className;
+        if (html !== undefined) e.innerHTML = html;
+        return e;
+    }
+
+    function escapeHtml(str) {
+        if (str === null || str === undefined) return "";
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function isNumber(v) {
+        return typeof v === "number" && !isNaN(v);
+    }
+
+    function renderCategories() {
+        DOM.categories.innerHTML = "";
+        if (State.categories && State.categories.length > 0) {
+            State.categories.forEach((cat, i) => {
+                const c = el("div", "PCategory" + (i === State.categoryIndex ? " active" : ""));
+                c.textContent = cat.label || "";
+                DOM.categories.appendChild(c);
+            });
+        } else {
+            const c = el("div", "PCategory active");
+            c.textContent = State.menuPath.length > 0
+                ? State.menuPath[State.menuPath.length - 1]
+                : "MAIN MENU";
+            DOM.categories.appendChild(c);
+        }
+    }
+
+    function renderTabs() {
+        Array.from(DOM.tabs.querySelectorAll(".PTab")).forEach(n => n.remove());
+
+        State.elements.forEach((tab, i) => {
+            if (!tab || !tab.type) return;
+            const tabEl = el("div", "PTab" + (i === State.index ? " active" : ""));
+            tabEl.dataset.index = i;
+            tabEl.style.animationDelay = (i * 0.018) + "s";
+
+            if (tab.type === "divider") {
+                const divider = el("div", "Divider");
+                divider.appendChild(el("div", "Left"));
+                const label = el("span", "Label");
+                label.textContent = tab.label || "";
+                divider.appendChild(label);
+                divider.appendChild(el("div", "Right"));
+                tabEl.appendChild(divider);
+                DOM.tabs.appendChild(tabEl);
+                return;
+            }
+
+            const label = el("span", "PTLabel");
+            let labelText = tab.label || "";
+
+            if (i === State.index && tab.type === "slider") {
+                const min = isNumber(tab.min) ? tab.min : 0;
+                const val = isNumber(tab.value) ? tab.value : min;
+                labelText = `${tab.label || ""}: ${val}`;
+            } else if (i === State.index && tab.type === "slider-checkbox") {
+                const min = isNumber(tab.min) ? tab.min : 0;
+                const val = isNumber(tab.value) ? tab.value : min;
+                labelText = `${tab.label || ""}: ${val}`;
+            }
+            label.textContent = labelText;
+
+            if (tab.hazardous) {
+                const hz = el("span");
+                hz.style.color = "#ffb020";
+                hz.textContent = " \u26A0";
+                label.appendChild(hz);
+            }
+            if (tab.locked) {
+                const lk = el("span");
+                lk.style.color = "#ff3344";
+                lk.textContent = " \uD83D\uDD12";
+                label.appendChild(lk);
+            }
+
+            tabEl.appendChild(label);
+
+            switch (tab.type) {
+                case "subMenu": {
+                    tabEl.appendChild(el("i", "fa-solid fa-angle-right"));
+                    break;
+                }
+                case "checkbox": {
+                    const cb = el("div", "Checkbox" + (tab.checked ? " Checked" : ""));
+                    cb.appendChild(el("div", "Inside"));
+                    tabEl.appendChild(cb);
+                    break;
+                }
+                case "slider": {
+                    const sl = el("div", "Slider");
+                    const prog = el("div", "Progress");
+                    const min = isNumber(tab.min) ? tab.min : 0;
+                    const max = isNumber(tab.max) ? tab.max : 100;
+                    const val = isNumber(tab.value) ? tab.value : min;
+                    const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+                    prog.style.width = pct + "%";
+                    prog.appendChild(el("div", "Thumb"));
+                    sl.appendChild(prog);
+                    tabEl.appendChild(sl);
+                    break;
+                }
+                case "slider-checkbox": {
+                    const wrap = el("div", "TOptions");
+                    const sl = el("div", "Slider");
+                    const prog = el("div", "Progress");
+                    const min = isNumber(tab.min) ? tab.min : 0;
+                    const max = isNumber(tab.max) ? tab.max : 100;
+                    const val = isNumber(tab.value) ? tab.value : min;
+                    const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+                    prog.style.width = pct + "%";
+                    prog.appendChild(el("div", "Thumb"));
+                    sl.appendChild(prog);
+                    wrap.appendChild(sl);
+                    const cb = el("div", "Checkbox" + (tab.checked ? " Checked" : ""));
+                    cb.appendChild(el("div", "Inside"));
+                    wrap.appendChild(cb);
+                    tabEl.appendChild(wrap);
+                    break;
+                }
+                case "scrollable": {
+                    const sc = el("div", "Scrollable");
+                    const vals = tab.values || [];
+                    const valIdx = isNumber(tab.value) ? tab.value - 1 : 0;
+                    const current = vals[valIdx] !== undefined ? vals[valIdx] : "";
+                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, escapeHtml(current)));
+                    sc.appendChild(el("span", null, "-"));
+                    tabEl.appendChild(sc);
+                    break;
+                }
+                case "scrollable-checkbox": {
+                    const wrap = el("div", "TOptions");
+                    const sc = el("div", "Scrollable");
+                    const vals = tab.values || [];
+                    const valIdx = isNumber(tab.value) ? tab.value - 1 : 0;
+                    const current = vals[valIdx] !== undefined ? vals[valIdx] : "";
+                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, escapeHtml(current)));
+                    sc.appendChild(el("span", null, "-"));
+                    wrap.appendChild(sc);
+                    const cb = el("div", "Checkbox" + (tab.checked ? " Checked" : ""));
+                    cb.appendChild(el("div", "Inside"));
+                    wrap.appendChild(cb);
+                    tabEl.appendChild(wrap);
+                    break;
+                }
+                case "button":
+                default:
+                    break;
+            }
+
+            DOM.tabs.appendChild(tabEl);
+        });
+
+        updateActiveIndicator();
+        updateFooter();
+        updateDesc();
+    }
+
+    function updateActiveIndicator() {
+        const active = DOM.tabs.querySelector(".PTab.active");
+        if (!active) {
+            DOM.activeIndicator.style.opacity = "0";
+            return;
+        }
+        DOM.activeIndicator.style.opacity = "1";
+        DOM.activeIndicator.style.top = active.offsetTop + "px";
+        DOM.activeIndicator.style.height = active.offsetHeight + "px";
+        scrollActiveIntoView(active);
+        updateScrollProgress();
+    }
+
+    function scrollActiveIntoView(activeEl) {
+        const container = DOM.tabs;
+        const containerTop = container.scrollTop;
+        const containerBottom = containerTop + container.clientHeight;
+        const elTop = activeEl.offsetTop;
+        const elBottom = elTop + activeEl.offsetHeight;
+
+        if (elTop < containerTop) {
+            container.scrollTop = elTop - 6;
+        } else if (elBottom > containerBottom) {
+            container.scrollTop = elBottom - container.clientHeight + 6;
+        }
+    }
+
+    function updateScrollProgress() {
+        const container = DOM.tabs;
+        const totalHeight = container.scrollHeight;
+        const visibleHeight = container.clientHeight;
+
+        if (totalHeight <= visibleHeight) {
+            DOM.psProgress.style.height = "97%";
+            DOM.psProgress.style.top = "0%";
+            return;
+        }
+
+        const ratio = visibleHeight / totalHeight;
+        const barHeight = Math.max(ratio * 97, 10);
+        const maxTop = 97 - barHeight;
+        const scrollRatio = container.scrollTop / (totalHeight - visibleHeight);
+        const barTop = scrollRatio * maxTop;
+
+        DOM.psProgress.style.height = barHeight + "%";
+        DOM.psProgress.style.top = barTop + "%";
+    }
+
+    function updateFooter() {
+        const total = State.elements.filter(e => e && e.type !== "divider").length;
+        const current = State.elements
+            .slice(0, State.index + 1)
+            .filter(e => e && e.type !== "divider").length;
+        DOM.footerIndicator.textContent = `(${current}/${total})`;
+    }
+
+    function updateDesc() {
+        const tab = State.elements[State.index];
+        if (!tab || !tab.desc || tab.type === "divider") {
+            DOM.descBox.style.display = "none";
+            return;
+        }
+        DOM.descBox.style.display = "flex";
+        let html = escapeHtml(tab.desc);
+        if (tab.hazardous) {
+            html += '<span class="hazard">\u00A0\u26A0\uFE0F Server may detect</span>';
+        }
+        if (tab.locked) {
+            html += '<span class="locked">\u00A0\uD83D\uDD12 Locked</span>';
+        }
+        DOM.descText.innerHTML = html;
+    }
+
+    function renderMetadata() {
+        const tab = State.elements[State.index];
+        if (!tab || !tab.metaData || tab.metaData.length === 0) {
+            DOM.metadata.style.display = "none";
+            return;
+        }
+        DOM.metadata.style.display = "flex";
+        DOM.metadata.innerHTML = "";
+
+        const title = el("div", "Title");
+        title.appendChild(el("span", null, escapeHtml(tab.name || tab.label || "")));
+        DOM.metadata.appendChild(title);
+        DOM.metadata.appendChild(el("div", "Line"));
+
+        const values = el("div", "Values");
+        tab.metaData.forEach(md => {
+            const row = el("div", "Value");
+            const key = el("div", "Key");
+            key.textContent = md.key || "";
+            row.appendChild(key);
+
+            const val = el("div", "Val");
+            const valSpan = el("span");
+            valSpan.textContent = md.value !== undefined ? String(md.value) : "";
+            if (md.key === "Weapons" || md.key === "الأسلحة") {
+                valSpan.style.color = "#ff4455";
+            }
+            val.appendChild(valSpan);
+
+            if ((md.key === "Health" || md.key === "Armour" ||
+                 md.key === "دم الاعب" || md.key === "درع الاعب") && md.color) {
+                const status = el("div", "Status");
+                status.style.backgroundColor = `rgba(${md.color}, 0.25)`;
+                const prog = el("div", "Progress");
+                const num = parseInt(md.value, 10);
+                prog.style.height = (isNaN(num) ? 0 : num) + "%";
+                prog.style.backgroundColor = `rgb(${md.color})`;
+                status.appendChild(prog);
+                val.appendChild(status);
+            }
+            row.appendChild(val);
+            values.appendChild(row);
+        });
+        DOM.metadata.appendChild(values);
+    }
+
+    function showNotification(type, title, desc, duration) {
+        duration = duration || 4000;
+        const id = ++State.notificationId;
+
+        const notif = el("div", "Notification " + type);
+        notif.id = "notif-" + id;
+
+        const iconName = type === "success" ? "fa-circle-check"
+            : type === "error" ? "fa-circle-xmark"
+            : "fa-circle-info";
+        const iconColor = type === "success" ? "#4ade80"
+            : type === "error" ? "#ff4455"
+            : "rgb(var(--accent))";
+
+        const icon = el("i", "fa-solid " + iconName);
+        icon.style.color = iconColor;
+        notif.appendChild(icon);
+
+        const content = el("div", "NotificationContent");
+        const t = el("div", "NotificationTitle");
+        t.textContent = title || "Notification";
+        t.style.color = type === "success" ? "#4ade80"
+            : type === "error" ? "#ff4455"
+            : "var(--text-0)";
+        content.appendChild(t);
+        if (desc) {
+            const d = el("div", "NotificationDesc");
+            d.textContent = desc;
+            content.appendChild(d);
+        }
+        notif.appendChild(content);
+
+        const prog = el("div", "NotificationProgress");
+        prog.style.animation = `progressBar ${duration}ms linear forwards`;
+        if (type === "success") prog.style.background = "linear-gradient(90deg,#4ade80,rgba(74,222,128,0.3))";
+        else if (type === "error") prog.style.background = "linear-gradient(90deg,#ff4455,rgba(255,68,85,0.3))";
+        notif.appendChild(prog);
+
+        DOM.notifications.appendChild(notif);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => notif.classList.add("enter"));
+        });
+
+        setTimeout(() => {
+            notif.classList.remove("enter");
+            notif.classList.add("exit");
+            setTimeout(() => notif.remove(), 700);
+        }, duration);
+    }
+
+    function updateKeyboard(visible, title, value) {
+        if (!visible) {
+            DOM.keyboardInput.style.display = "none";
+            return;
+        }
+        DOM.keyboardInput.style.display = "block";
+        DOM.keyboardTitle.textContent = title || "Keyboard Input";
+        DOM.keyboardValue.textContent = value || "";
+    }
+
+    function updateKeybinds(visible, binds) {
+        if (!visible) {
+            DOM.keybindsPanel.style.display = "none";
+            return;
+        }
+        DOM.keybindsPanel.style.display = "flex";
+        DOM.keybindsList.innerHTML = "";
+
+        (binds || []).forEach(bind => {
+            const row = el("div", "Keybind");
+            const label = el("div", "Label");
+            label.textContent = bind.label || "";
+            row.appendChild(label);
+
+            const elements = el("div", "Elements");
+            const keySpan = el("span");
+            const isToggle = bind.type === "checkbox" || bind.type === "slider-checkbox";
+            keySpan.textContent = isToggle ? `(${bind.keyLabel || "?"})` : (bind.keyLabel || "?");
+            elements.appendChild(keySpan);
+
+            if (isToggle) {
+                const statusSpan = el("span");
+                statusSpan.textContent = bind.checked ? "ON" : "OFF";
+                statusSpan.style.color = bind.checked ? "var(--text-0)" : "rgba(255,255,255,0.35)";
+                elements.appendChild(statusSpan);
+            }
+            row.appendChild(elements);
+            DOM.keybindsList.appendChild(row);
+        });
+    }
+
+    function updateFreecam(visible, weaponIndex, vehicleIndex) {
+        State.freecamVisible = visible;
+        if (weaponIndex !== undefined) State.freecamWeaponIndex = weaponIndex - 1;
+        if (vehicleIndex !== undefined) State.freecamVehicleIndex = vehicleIndex - 1;
+
+        if (!visible) {
+            DOM.freecamOptions.style.display = "none";
+            DOM.crosshair.style.display = "none";
+            return;
+        }
+
+        DOM.freecamOptions.style.display = "flex";
+        DOM.crosshair.style.display = "block";
+        DOM.freecamOptions.innerHTML = "";
+
+        State.freecamOptions.forEach((opt, i) => {
+            const isSelected = i === State.freecamOptionIndex;
+            const dist = Math.abs(i - State.freecamOptionIndex);
+            const opacity = Math.max(1 - dist * 0.12, 0.3);
+
+            const optionEl = el("div", "Option" + (isSelected ? " Selected" : ""));
+            optionEl.style.opacity = opacity;
+
+            let html = "";
+            if (isSelected) html += '<span class="FCdash">-</span>&nbsp;&nbsp;';
+            html += escapeHtml(opt);
+            if (isSelected && opt === "Shoot Weapon" && State.freecamWeapons[State.freecamWeaponIndex]) {
+                html += `&nbsp;&nbsp;<span class="CycleHighlight">(${escapeHtml(State.freecamWeapons[State.freecamWeaponIndex])})</span>`;
+            }
+            if (isSelected && opt === "Spawn Vehicle" && State.freecamVehicles[State.freecamVehicleIndex]) {
+                html += `&nbsp;&nbsp;<span class="CycleHighlight">(${escapeHtml(State.freecamVehicles[State.freecamVehicleIndex])})</span>`;
+            }
+            if (isSelected) html += '&nbsp;&nbsp;<span class="FCdash">-</span>';
+            optionEl.innerHTML = html;
+            DOM.freecamOptions.appendChild(optionEl);
+        });
+    }
+
+    function scrollFreecam(direction) {
+        if (!State.freecamVisible) return;
+        if (direction === "up") {
+            State.freecamOptionIndex = (State.freecamOptionIndex - 1 + State.freecamOptions.length) % State.freecamOptions.length;
+        } else {
+            State.freecamOptionIndex = (State.freecamOptionIndex + 1) % State.freecamOptions.length;
+        }
+        updateFreecam(true);
+    }
+
+    function showUI() {
+        State.visible = true;
+        DOM.wrapper.style.visibility = "visible";
+        DOM.wrapper.classList.remove("fadeOut");
+        DOM.wrapper.classList.add("fadeIn");
+        renderCategories();
+        renderTabs();
+        renderMetadata();
+    }
+
+    function hideUI() {
+        State.visible = false;
+        DOM.wrapper.classList.remove("fadeIn");
+        DOM.wrapper.classList.add("fadeOut");
+        setTimeout(() => {
+            if (!State.visible) {
+                DOM.wrapper.style.visibility = "hidden";
+                DOM.metadata.style.display = "none";
+                DOM.descBox.style.display = "none";
+            }
+        }, 240);
+    }
+
+    window.addEventListener("message", function(event) {
+        const data = event.data;
+        if (!data || typeof data !== "object") return;
+        const action = data.action;
+
+        switch (action) {
+            case "showUI": {
+                if (data.visible === false) { hideUI(); return; }
+                if (Array.isArray(data.elements)) State.elements = data.elements;
+                if (typeof data.index === "number") State.index = data.index;
+                if (data.path) State.menuPath = data.path;
+                if (data.username) State.username = data.username;
+                if (Array.isArray(data.categories) && data.categories.length > 0) {
+                    State.categories = data.categories;
+                    State.categoryIndex = typeof data.categoryIndex === "number" ? data.categoryIndex : 0;
+                } else { State.categories = null; State.categoryIndex = 0; }
+                showUI();
+                break;
+            }
+            case "updateElements": {
+                if (Array.isArray(data.elements)) State.elements = data.elements;
+                if (typeof data.index === "number") State.index = data.index;
+                if (data.path) State.menuPath = data.path;
+                if (Array.isArray(data.categories) && data.categories.length > 0) {
+                    State.categories = data.categories;
+                    State.categoryIndex = typeof data.categoryIndex === "number" ? data.categoryIndex : 0;
+                } else { State.categories = null; State.categoryIndex = 0; }
+                renderCategories();
+                renderTabs();
+                renderMetadata();
+                break;
+            }
+            case "keydown": {
+                if (typeof data.index === "number") {
+                    State.index = data.index;
+                    updateActiveTab();
+                }
+                break;
+            }
+            case "showNotification": {
+                showNotification(
+                    data.type || "info",
+                    data.title || "Notification",
+                    data.desc || "",
+                    data.duration || 4000
+                );
+                break;
+            }
+            case "displayBinds": {
+                updateKeybinds(!!data.visible, data.binds || []);
+                break;
+            }
+            case "displayFreecam": {
+                updateFreecam(!!data.visible, data.weaponIndex, data.vehicleIndex);
+                break;
+            }
+            case "updateWeapon": {
+                if (typeof data.index === "number") {
+                    State.freecamWeaponIndex = data.index - 1;
+                    updateFreecam(true);
+                }
+                break;
+            }
+            case "updateVehicle": {
+                if (typeof data.index === "number") {
+                    State.freecamVehicleIndex = data.index - 1;
+                    updateFreecam(true);
+                }
+                break;
+            }
+            case "scroll": { scrollFreecam(data.direction); break; }
+            case "updateKeyboard": { updateKeyboard(!!data.visible, data.title, data.value); break; }
+            case "updateBanner": {
+                if (data.bannerLink) DOM.bannerImg.src = data.bannerLink;
+                if (data.bannerColor) {
+                    const hex = String(data.bannerColor).replace("#","");
+                    const r = parseInt(hex.substring(0,2),16);
+                    const g = parseInt(hex.substring(2,4),16);
+                    const b = parseInt(hex.substring(4,6),16);
+                    if (!isNaN(r) && !isNaN(g) && !isNaN(b)) {
+                        document.documentElement.style.setProperty("--accent", `${r}, ${g}, ${b}`);
+                    }
+                }
+                break;
+            }
+            case "setMenuPosition": {
+                const root = document.documentElement;
+                if (data.x === "Left") root.style.setProperty("--menu-x", "3vw");
+                else if (data.x === "Center") root.style.setProperty("--menu-x", "50vw");
+                else if (data.x === "Right") root.style.setProperty("--menu-x", "85vw");
+                if (data.y === "Top") root.style.setProperty("--menu-y", "5vh");
+                else if (data.y === "Middle") root.style.setProperty("--menu-y", "50vh");
+                else if (data.y === "Bottom") root.style.setProperty("--menu-y", "85vh");
+                break;
+            }
+            case "updatePosition":
+            case "updatePositionPrecise": {
+                const root = document.documentElement;
+                if (data.position) {
+                    if (data.position.x !== undefined) root.style.setProperty("--menu-x", data.position.x + "%");
+                    if (data.position.y !== undefined) root.style.setProperty("--menu-y", data.position.y + "%");
+                }
+                break;
+            }
+            case "getClipboard": { break; }
+            default: break;
+        }
+    });
+
+    function updateActiveTab() {
+        const tabs = DOM.tabs.querySelectorAll(".PTab");
+        tabs.forEach((t, i) => {
+            if (i === State.index) t.classList.add("active");
+            else t.classList.remove("active");
+        });
+        updateActiveIndicator();
+        updateFooter();
+        updateDesc();
+        renderMetadata();
+    }
+
+    window.addEventListener("wheel", function(e) {
+        if (!State.visible || State.freecamVisible) return;
+        if (e.deltaY < 0) {
+            State.index = (State.index - 1 + State.elements.length) % State.elements.length;
+        } else {
+            State.index = (State.index + 1) % State.elements.length;
+        }
+        updateActiveTab();
+    }, { passive: true });
+
+    DOM.tabs.addEventListener("scroll", function() {
+        updateScrollProgress();
+    }, { passive: true });
+
+    window.addEventListener("resize", function() {
+        updateActiveIndicator();
+    });
+
+    console.log("[zombie] glass UI ready.");
+})();
+</script>
+</body>
+</html>
