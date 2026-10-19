@@ -3,45 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>zombie</title>
+<title>zombie · RE4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 :root {
-    --menu-color: 255, 255, 255;
     --menu-x: 3vw;
     --menu-y: 5vh;
 
-    --bg-0: #050505;
-    --bg-1: #0a0a0a;
-    --bg-2: #111111;
-    --bg-3: #161616;
-    --border-soft: rgba(255,255,255,0.08);
-    --border-accent: rgba(255,255,255,0.22);
-    --text-0: #ffffff;
-    --text-1: #e8e8e8;
-    --text-2: #a0a0a0;
-    --text-3: #5a5a5a;
-    --white: rgb(255,255,255);
-    --white-soft: rgba(255,255,255,0.12);
-    --white-glow: rgba(255,255,255,0.25);
+    /* RE4 palette */
+    --re4-bg-0: #060403;
+    --re4-bg-1: #0c0a07;
+    --re4-bg-2: #14100b;
+    --re4-bg-3: #1c1610;
+    --re4-metal: #1a1410;
+    --re4-ink: #e8dcc8;
+    --re4-ink-dim: #b8a888;
+    --re4-ink-faint: #6b5f4a;
+    --re4-orange: #ff6b1a;
+    --re4-orange-hot: #ff8c42;
+    --re4-orange-dark: #c44a0e;
+    --re4-red: #c41e1e;
+    --re4-red-hot: #ff2a2a;
+    --re4-yellow: #e8b83a;
+    --re4-border: #3a2a1a;
+    --re4-border-hot: #ff6b1a;
+
+    --ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
     background: transparent !important;
-    background-color: transparent !important;
     height: 100vh;
     overflow: hidden;
     user-select: none;
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: var(--text-1);
-    margin: 0;
-    padding: 0;
+    color: var(--re4-ink);
 }
 
 #root {
@@ -59,13 +62,40 @@ html, body {
     display: flex;
     left: var(--menu-x);
     top: var(--menu-y);
-    transform: none;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     flex-direction: column;
-    font-family: 'Inter', sans-serif;
-    filter: drop-shadow(0 0.5vw 1vw rgba(0,0,0,0.6));
+    filter: drop-shadow(0 0.6vw 2vw rgba(0,0,0,0.85));
     pointer-events: auto;
+    opacity: 0;
+    transform: translateY(0.6vw);
+    transition: opacity 0.35s var(--ease-soft), transform 0.5s var(--ease-spring);
+    width: 19.0104vw;
+}
+.PWrapper.fadeIn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* corner brackets */
+.PWrapper::before,
+.PWrapper::after {
+    content: "";
+    position: absolute;
+    width: 0.6vw;
+    height: 0.6vw;
+    border: 0.08vw solid var(--re4-orange);
+    pointer-events: none;
+    filter: drop-shadow(0 0 0.2vw var(--re4-orange));
+    opacity: 0.85;
+}
+.PWrapper::before {
+    top: -0.15vw; left: -0.15vw;
+    border-right: none; border-bottom: none;
+}
+.PWrapper::after {
+    bottom: -0.15vw; right: -0.15vw;
+    border-left: none; border-top: none;
 }
 
 /* ============================================================
@@ -75,32 +105,79 @@ html, body {
     position: relative;
     display: flex;
     width: 100%;
-    height: 6.2vw;
+    height: 3.2vw;
     justify-content: center;
     align-items: center;
-    border-top-left-radius: 0.5vw;
-    border-top-right-radius: 0.5vw;
+    flex-direction: row;
+    gap: 0.6vw;
     overflow: hidden;
-    border: 0.05vw solid var(--border-accent);
+    border: 0.08vw solid var(--re4-border);
     border-bottom: none;
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    background:
+        linear-gradient(180deg, var(--re4-bg-2) 0%, var(--re4-bg-0) 100%),
+        repeating-linear-gradient(45deg,
+            rgba(255,107,26,0.03) 0,
+            rgba(255,107,26,0.03) 0.1vw,
+            transparent 0.1vw,
+            transparent 0.2vw);
 }
-
+.PWrapper .PBanner::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 0.05vw;
+    background: linear-gradient(90deg, transparent, var(--re4-orange), transparent);
+    box-shadow: 0 0 0.3vw var(--re4-orange);
+}
 .PWrapper .PBanner::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.85) 100%);
-    pointer-events: none;
-}
-
-.PWrapper .PBanner img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    bottom: 0; left: 0; right: 0;
+    height: 0.08vw;
+    background: linear-gradient(90deg, transparent 0%, var(--re4-orange) 30%, var(--re4-orange-hot) 50%, var(--re4-orange) 70%, transparent 100%);
+    box-shadow: 0 0 0.4vw var(--re4-orange);
     opacity: 0.9;
+}
+.PWrapper .PBanner .PBannerIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4vw;
+    height: 1.4vw;
+    border: 0.08vw solid var(--re4-orange);
+    border-radius: 0.1vw;
+    color: var(--re4-orange);
+    font-size: 0.8vw;
+    transform: rotate(45deg);
+    box-shadow: 0 0 0.3vw rgba(255,107,26,0.4), inset 0 0 0.2vw rgba(255,107,26,0.2);
+}
+.PWrapper .PBanner .PBannerIcon i {
+    transform: rotate(-45deg);
+}
+.PWrapper .PBanner .PBannerText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.08vw;
+}
+.PWrapper .PBanner .PBannerText .PTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.92vw;
+    font-weight: 700;
+    letter-spacing: 0.18vw;
+    color: var(--re4-ink);
+    text-shadow: 0 0 0.3vw rgba(255,107,26,0.5);
+}
+.PWrapper .PBanner .PBannerText .PTitle .PAccent {
+    color: var(--re4-orange);
+}
+.PWrapper .PBanner .PBannerText .PSub {
+    font-family: 'Special Elite', serif;
+    font-size: 0.5vw;
+    font-weight: 400;
+    letter-spacing: 0.2vw;
+    color: var(--re4-ink-faint);
+    text-transform: uppercase;
 }
 
 /* ============================================================
@@ -112,38 +189,34 @@ html, body {
     justify-content: flex-start;
     align-items: stretch;
     flex-direction: row;
-    gap: 0.2604vw;
+    gap: 0.26vw;
 }
 
 /* ============================================================
-   SCROLLBAR
+   SCROLL
    ============================================================ */
 .PWrapper .PElements .PScroll {
     position: absolute;
     display: flex;
-    right: -0.85vw;
+    right: -0.95vw;
     top: 0;
-    width: 0.55vw;
+    width: 0.5vw;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: var(--re4-bg-0);
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     gap: 0.15vw;
-    border-radius: 0.25vw;
-    border: 0.04vw solid var(--border-soft);
+    border: 0.06vw solid var(--re4-border);
     box-shadow: inset 0 0 0.3vw rgba(0,0,0,0.9);
 }
-
 .PWrapper .PElements .PScroll i {
-    font-size: 0.55vw;
-    color: var(--text-3);
+    font-size: 0.5vw;
+    color: var(--re4-ink-faint);
     margin: 0.12vw 0;
     transition: color 0.2s;
 }
-
-.PWrapper .PElements .PScroll:hover i { color: var(--white); }
-
+.PWrapper .PElements .PScroll:hover i { color: var(--re4-orange); }
 .PWrapper .PElements .PScroll .PSProgressWrapper {
     position: relative;
     display: flex;
@@ -152,20 +225,18 @@ html, body {
     justify-content: center;
     align-items: flex-start;
 }
-
 .PWrapper .PElements .PScroll .PSProgress {
     position: relative;
     display: flex;
-    width: 0.28vw;
+    width: 0.22vw;
     margin-top: 0.15vw;
-    background: linear-gradient(180deg, var(--white) 0%, rgba(255,255,255,0.5) 100%);
-    border-radius: 0.25vw;
-    box-shadow: 0 0 0.3vw var(--white-glow), 0 0 0.15vw rgba(255,255,255,0.5);
+    background: linear-gradient(180deg, var(--re4-orange-hot) 0%, var(--re4-orange-dark) 100%);
+    box-shadow: 0 0 0.35vw var(--re4-orange);
     transition: top 0.25s ease, height 0.25s ease;
 }
 
 /* ============================================================
-   RIGHT SIDE
+   RIGHT ELEMENTS
    ============================================================ */
 .PWrapper .PElements .PRightElements {
     position: relative;
@@ -174,55 +245,83 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-left: 0.08vw solid var(--re4-border);
+    border-right: 0.08vw solid var(--re4-border);
+    background:
+        linear-gradient(180deg, var(--re4-bg-1) 0%, var(--re4-bg-0) 100%),
+        repeating-linear-gradient(0deg,
+            rgba(255,107,26,0.02) 0,
+            rgba(255,107,26,0.02) 0.05vw,
+            transparent 0.05vw,
+            transparent 0.1vw);
+    position: relative;
+}
+.PWrapper .PElements .PRightElements::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: -0.05vw;
+    width: 0.05vw;
+    background: linear-gradient(180deg, transparent 0%, var(--re4-orange) 50%, transparent 100%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+.PWrapper .PElements .PRightElements::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; right: -0.05vw;
+    width: 0.05vw;
+    background: linear-gradient(180deg, transparent 0%, var(--re4-orange) 50%, transparent 100%);
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 /* ============================================================
-   CATEGORIES
+   CATEGORIES / BREADCRUMB
    ============================================================ */
 .PWrapper .PCategories {
     position: relative;
     display: flex;
     width: 100%;
-    height: 1.5625vw;
-    justify-content: center;
+    height: 1.4vw;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: row;
-    background: var(--bg-0);
-    border-left: 0.05vw solid var(--border-accent);
-    border-right: 0.05vw solid var(--border-accent);
-    border-bottom: 0.05vw solid var(--border-accent);
+    padding: 0 0.7vw;
+    background: var(--re4-bg-0);
+    border-bottom: 0.06vw solid var(--re4-border);
     overflow: hidden;
+    gap: 0.4vw;
 }
-
+.PWrapper .PCategories::before {
+    content: "▸";
+    color: var(--re4-orange);
+    font-size: 0.6vw;
+    filter: drop-shadow(0 0 0.15vw var(--re4-orange));
+}
 .PWrapper .PCategories .PCategory {
     position: relative;
     display: flex;
-    flex: 1;
-    text-align: center;
+    text-align: left;
     height: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72vw;
-    font-weight: 500;
-    letter-spacing: 0.02vw;
-    color: var(--text-2);
-    transition: color 0.25s, background 0.25s;
+    font-family: 'Special Elite', serif;
+    font-size: 0.58vw;
+    font-weight: 400;
+    letter-spacing: 0.18vw;
+    color: var(--re4-ink-faint);
+    text-transform: uppercase;
+    transition: color 0.25s;
     cursor: default;
 }
-
 .PWrapper .PCategories .PCategory.active {
-    color: var(--white);
-    background: linear-gradient(0deg, rgba(255,255,255,0.08) 0%, transparent 100%);
-    box-shadow: inset 0 -0.05vw 0 0 var(--white);
+    color: var(--re4-orange);
+    text-shadow: 0 0 0.25vw rgba(255,107,26,0.6);
 }
-
-.PWrapper .PCategories .PCategory:only-child {
-    position: absolute;
-    left: 0;
-    padding: 0 0.8vw;
-    justify-content: flex-start;
-    font-size: 0.7vw;
+.PWrapper .PCategories .PCategory + .PCategory::before {
+    content: "·";
+    margin: 0 0.4vw;
+    color: var(--re4-ink-faint);
 }
 
 /* ============================================================
@@ -237,19 +336,39 @@ html, body {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
-    border-left: 0.05vw solid var(--border-accent);
-    border-right: 0.05vw solid var(--border-accent);
+    background: transparent;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0.2vw 0;
+    padding: 0.15vw 0;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
+.PWrapper .PTabs::-webkit-scrollbar { display: none; }
 
-.PWrapper .PTabs::-webkit-scrollbar { display: none; width: 0; height: 0; }
+/* ACTIVE INDICATOR — sharp side bar */
+.PWrapper .PTabs .activeIndicator {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 1.5625vw;
+    background: linear-gradient(90deg,
+        rgba(255,107,26,0.18) 0%,
+        rgba(255,107,26,0.04) 60%,
+        transparent 100%);
+    border-left: 0.12vw solid var(--re4-orange);
+    box-shadow:
+        inset 0.06vw 0 0 0 rgba(255,107,26,0.4),
+        0 0 0.4vw rgba(255,107,26,0.35);
+    z-index: 0;
+    pointer-events: none;
+    transition:
+        top 0.32s var(--ease-spring),
+        height 0.22s var(--ease-spring);
+}
 
+/* TAB ROW */
 .PWrapper .PTabs .PTab {
     position: relative;
     display: flex;
@@ -260,192 +379,162 @@ html, body {
     justify-content: center;
     align-items: center;
     transition: background 0.2s ease;
-    border-bottom: 0.04vw solid rgba(255,255,255,0.02);
+    border-bottom: 0.03vw solid rgba(255,107,26,0.05);
     z-index: 1;
+    padding-left: 0.5vw;
 }
-
-.PWrapper .PTabs .PTab:hover { background: rgba(255,255,255,0.03); }
-
-.PWrapper .PTabs .PTab .PTLabel,
-.PWrapper .PTabs .PTab .Checkbox,
-.PWrapper .PTabs .PTab .Slider,
-.PWrapper .PTabs .PTab .TOptions,
-.PWrapper .PTabs .PTab .Scrollable,
-.PWrapper .PTabs .PTab .Divider {
-    filter: blur(0.3px);
-    transition: filter 0.2s ease;
+.PWrapper .PTabs .PTab:hover {
+    background: rgba(255,107,26,0.04);
 }
-
-.PWrapper .PTabs .PTab:hover .PTLabel,
-.PWrapper .PTabs .PTab:hover .Checkbox,
-.PWrapper .PTabs .PTab:hover .Slider,
-.PWrapper .PTabs .PTab:hover .TOptions,
-.PWrapper .PTabs .PTab:hover .Scrollable,
-.PWrapper .PTabs .PTab:hover .Divider,
-.PWrapper .PTabs .PTab.active .PTLabel,
-.PWrapper .PTabs .PTab.active .Checkbox,
-.PWrapper .PTabs .PTab.active .Slider,
-.PWrapper .PTabs .PTab.active .TOptions,
-.PWrapper .PTabs .PTab.active .Scrollable,
-.PWrapper .PTabs .PTab.active .Divider {
-    filter: blur(0);
+.PWrapper .PTabs .PTab.active {
+    background: transparent;
 }
 
 .PWrapper .PTabs .PTab .PTLabel {
     position: absolute;
-    display: block;
-    left: 0.6vw;
+    display: flex;
+    align-items: center;
+    left: 0.75vw;
     width: 62%;
     height: 60%;
     font-family: 'Inter', sans-serif;
-    font-size: 0.62vw;
+    font-size: 0.63vw;
     font-weight: 400;
-    letter-spacing: 0.01vw;
-    color: var(--text-1);
+    letter-spacing: 0.02vw;
+    color: var(--re4-ink-dim);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    display: flex;
-    align-items: center;
-    transition: color 0.2s;
+    transition: color 0.25s, letter-spacing 0.25s;
+}
+.PWrapper .PTabs .PTab.active .PTLabel {
+    color: var(--re4-ink);
+    font-weight: 500;
+    letter-spacing: 0.03vw;
+    text-shadow: 0 0 0.2vw rgba(255,107,26,0.3);
 }
 
-.PWrapper .PTabs .PTab.active .PTLabel { color: var(--white); font-weight: 500; }
-
-.PWrapper .PTabs .PTab i {
+.PWrapper .PTabs .PTab i.fa-angle-right,
+.PWrapper .PTabs .PTab i.fa-chevron-right {
     position: absolute;
     display: flex;
-    right: 0.7vw;
+    right: 0.75vw;
     font-size: 0.55vw;
-    color: var(--text-3);
-    transition: color 0.2s, transform 0.2s;
+    color: var(--re4-ink-faint);
+    transition: color 0.25s, transform 0.25s;
+}
+.PWrapper .PTabs .PTab.active i.fa-angle-right,
+.PWrapper .PTabs .PTab:hover i.fa-angle-right,
+.PWrapper .PTabs .PTab.active i.fa-chevron-right,
+.PWrapper .PTabs .PTab:hover i.fa-chevron-right {
+    color: var(--re4-orange);
+    transform: translateX(0.1vw);
 }
 
-.PWrapper .PTabs .PTab.active i,
-.PWrapper .PTabs .PTab:hover i { color: var(--white); }
-
-/* CHECKBOX */
-.PWrapper .PTabs .PTab .Checkbox,
-.PWrapper .PTabs .PTab .TOptions .Checkbox {
-    position: relative;
-    display: flex;
-    width: 1.5625vw;
-    height: 0.7813vw;
-    justify-content: flex-start;
-    align-items: center;
-    background: #141414;
-    border: 0.04vw solid var(--border-soft);
-    border-radius: 999vw;
-    transition: 0.3s ease;
-    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.9);
-}
-
-.PWrapper .PTabs .PTab .Checkbox.Checked,
-.PWrapper .PTabs .PTab .TOptions .Checkbox.Checked {
-    background: rgba(255,255,255,0.85);
-    border-color: var(--white);
-    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.5), 0 0 0.4vw var(--white-glow);
-}
-
-.PWrapper .PTabs .PTab .Checkbox .Inside,
-.PWrapper .PTabs .PTab .TOptions .Checkbox .Inside {
+/* CHECKBOX — sharp square */
+.PWrapper .PTabs .PTab .Checkbox {
     position: absolute;
+    right: 0.75vw;
     display: flex;
-    left: 0.13vw;
-    width: 0.45vw;
-    height: 0.45vw;
-    background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 100%);
-    border-radius: 999vw;
-    box-shadow: 0 0.05vw 0.1vw rgba(0,0,0,0.7), inset 0 0.03vw 0.06vw rgba(255,255,255,0.9);
-    transition: 0.3s ease;
-}
-
-.PWrapper .PTabs .PTab .Checkbox.Checked .Inside,
-.PWrapper .PTabs .PTab .TOptions .Checkbox.Checked .Inside {
-    left: 0.95vw;
-    background: linear-gradient(180deg, #fff 0%, #e8e8e8 100%);
-    box-shadow: 0 0.05vw 0.1vw rgba(0,0,0,0.7), 0 0 0.2vw var(--white-glow);
-}
-
-.PWrapper .PTabs .PTab > .Checkbox { position: absolute; right: 0.7vw; }
-
-/* SLIDER */
-.PWrapper .PTabs .PTab .Slider,
-.PWrapper .PTabs .PTab .TOptions .Slider {
-    position: relative;
-    display: flex;
-    width: 2.3438vw;
-    height: 0.2083vw;
-    justify-content: flex-start;
-    align-items: center;
-    background: #141414;
-    border: 0.03vw solid var(--border-soft);
-    border-radius: 999vw;
-    box-shadow: inset 0 0.06vw 0.12vw rgba(0,0,0,0.9);
-}
-
-.PWrapper .PTabs .PTab .Slider .Progress,
-.PWrapper .PTabs .PTab .TOptions .Slider .Progress {
-    position: absolute;
-    display: flex;
-    height: 100%;
+    width: 0.85vw;
+    height: 0.85vw;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, var(--white) 100%);
-    border-radius: 999vw;
-    box-shadow: 0 0 0.2vw var(--white-glow);
-    transition: width 0.15s ease;
+    background: var(--re4-bg-2);
+    border: 0.06vw solid var(--re4-border);
+    border-radius: 0.05vw;
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 0.05vw 0.15vw rgba(0,0,0,0.9);
+    color: var(--re4-orange);
+    font-size: 0.55vw;
+    font-weight: 700;
+}
+.PWrapper .PTabs .PTab .Checkbox.Checked {
+    background: var(--re4-orange-dark);
+    border-color: var(--re4-orange);
+    color: var(--re4-bg-0);
+    box-shadow:
+        inset 0 0.05vw 0.15vw rgba(0,0,0,0.5),
+        0 0 0.35vw rgba(255,107,26,0.6);
+}
+.PWrapper .PTabs .PTab .Checkbox .Inside {
+    display: none;
+}
+.PWrapper .PTabs .PTab .Checkbox.Checked::before {
+    content: "✕";
+    color: var(--re4-bg-0);
+    font-size: 0.6vw;
+    line-height: 1;
+    text-shadow: 0 0 0.15vw rgba(0,0,0,0.3);
 }
 
-.PWrapper .PTabs .PTab .Slider .Progress .Thumb,
-.PWrapper .PTabs .PTab .TOptions .Slider .Progress .Thumb {
+/* SLIDER — sharp bar */
+.PWrapper .PTabs .PTab .Slider {
     position: absolute;
-    right: 0;
-    width: 0.4167vw;
-    height: 0.4167vw;
-    background: linear-gradient(180deg, #fff 0%, #d0d0d0 100%);
-    border-radius: 999vw;
-    box-shadow: 0 0.05vw 0.15vw rgba(0,0,0,0.8), 0 0 0.2vw var(--white-glow);
+    right: 0.75vw;
+    display: flex;
+    width: 2.4vw;
+    height: 0.22vw;
+    justify-content: flex-start;
+    align-items: center;
+    background: var(--re4-bg-2);
+    border: 0.05vw solid var(--re4-border);
+    box-shadow: inset 0 0.06vw 0.12vw rgba(0,0,0,0.9);
 }
-
-.PWrapper .PTabs .PTab .Slider { position: absolute; right: 0.7vw; }
+.PWrapper .PTabs .PTab .Slider .Progress {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    background: linear-gradient(90deg, var(--re4-orange-dark) 0%, var(--re4-orange) 100%);
+    box-shadow: 0 0 0.3vw rgba(255,107,26,0.5);
+    transition: width 0.28s var(--ease-spring);
+}
+.PWrapper .PTabs .PTab .Slider .Progress .Thumb {
+    position: absolute;
+    right: -0.15vw;
+    width: 0.32vw;
+    height: 0.55vw;
+    background: linear-gradient(180deg, var(--re4-orange-hot) 0%, var(--re4-orange-dark) 100%);
+    border: 0.04vw solid var(--re4-orange-hot);
+    box-shadow:
+        0 0 0.3vw rgba(255,107,26,0.7),
+        inset 0 0 0.1vw rgba(255,255,255,0.3);
+}
 
 /* TOptions */
 .PWrapper .PTabs .PTab .TOptions {
     position: absolute;
+    right: 0.75vw;
     display: flex;
-    right: 0.7vw;
-    width: auto;
     justify-content: flex-end;
     align-items: center;
     flex-direction: row;
-    gap: 0.5vw;
+    gap: 0.55vw;
 }
+.PWrapper .PTabs .PTab .TOptions .Slider { position: relative; right: auto; }
+.PWrapper .PTabs .PTab .TOptions .Checkbox { position: relative; right: auto; }
 
 /* SCROLLABLE */
-.PWrapper .PTabs .PTab .Scrollable,
-.PWrapper .PTabs .PTab .TOptions .Scrollable {
-    position: relative;
+.PWrapper .PTabs .PTab .Scrollable {
+    position: absolute;
+    right: 0.75vw;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap: 0.3vw;
-    font-size: 0.6vw;
-    font-weight: 400;
-    color: var(--white);
-    letter-spacing: 0.02vw;
+    gap: 0.35vw;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58vw;
+    font-weight: 500;
+    color: var(--re4-ink);
+    letter-spacing: 0.03vw;
 }
-
 .PWrapper .PTabs .PTab .Scrollable span:first-child,
-.PWrapper .PTabs .PTab .Scrollable span:last-child,
-.PWrapper .PTabs .PTab .TOptions .Scrollable span:first-child,
-.PWrapper .PTabs .PTab .TOptions .Scrollable span:last-child {
-    color: var(--text-3);
-    font-weight: 300;
+.PWrapper .PTabs .PTab .Scrollable span:last-child {
+    color: var(--re4-orange);
+    font-weight: 600;
 }
-
-.PWrapper .PTabs .PTab .Scrollable { position: absolute; right: 0.7vw; }
 
 /* DIVIDER */
 .PWrapper .PTabs .PTab .Divider {
@@ -459,28 +548,23 @@ html, body {
     flex-direction: row;
     gap: 0.4vw;
 }
-
 .PWrapper .PTabs .PTab .Divider .Left,
 .PWrapper .PTabs .PTab .Divider .Right {
-    position: relative;
-    display: flex;
     flex: 1;
-    height: 0.03vw;
-    background: linear-gradient(90deg, transparent 0%, var(--border-accent) 50%, transparent 100%);
+    height: 0.04vw;
+    background: linear-gradient(90deg, transparent 0%, var(--re4-orange) 50%, transparent 100%);
+    opacity: 0.5;
 }
-
 .PWrapper .PTabs .PTab .Divider .Label {
-    position: relative;
-    display: flex;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.68vw;
-    font-weight: 600;
-    letter-spacing: 0.08vw;
-    color: var(--white);
+    font-family: 'Special Elite', serif;
+    font-size: 0.58vw;
+    font-weight: 400;
+    letter-spacing: 0.2vw;
+    color: var(--re4-orange);
     white-space: nowrap;
     padding: 0 0.4vw;
     text-transform: uppercase;
-    opacity: 0.85;
+    text-shadow: 0 0 0.2vw rgba(255,107,26,0.4);
 }
 
 /* ============================================================
@@ -490,45 +574,35 @@ html, body {
     position: relative;
     display: flex;
     width: 19.0104vw;
-    height: 1.5625vw;
-    justify-content: center;
+    height: 1.4vw;
+    justify-content: space-between;
     align-items: center;
-    background: var(--bg-0);
-    border-left: 0.05vw solid var(--border-accent);
-    border-right: 0.05vw solid var(--border-accent);
-    border-bottom: 0.05vw solid var(--border-accent);
-    border-bottom-left-radius: 0.5vw;
-    border-bottom-right-radius: 0.5vw;
+    padding: 0 0.7vw;
+    background: var(--re4-bg-0);
+    border-top: 0.06vw solid var(--re4-border);
+    border-left: 0.08vw solid var(--re4-border);
+    border-right: 0.08vw solid var(--re4-border);
+    border-bottom: 0.08vw solid var(--re4-border);
+    box-shadow: inset 0 -0.06vw 0 0 rgba(255,107,26,0.2);
 }
-
-.PWrapper .PFooter img {
-    position: absolute;
-    left: 0.5vw;
-    width: 0.9vw;
-    height: 0.9vw;
-    object-fit: contain;
-    opacity: 0.9;
-    filter: drop-shadow(0 0 0.15vw var(--white-glow));
-}
-
 .PWrapper .PFooter .PBuild {
-    position: absolute;
-    left: 1.7vw;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72vw;
-    font-weight: 600;
-    letter-spacing: 0.05vw;
-    color: var(--white);
-}
-
-.PWrapper .PFooter .PIndicator {
-    position: absolute;
-    right: 0.6vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.58vw;
+    font-family: 'Special Elite', serif;
+    font-size: 0.5vw;
     font-weight: 400;
-    color: var(--text-3);
-    letter-spacing: 0.02vw;
+    letter-spacing: 0.18vw;
+    color: var(--re4-ink-faint);
+    text-transform: uppercase;
+}
+.PWrapper .PFooter .PBuild .PAccent {
+    color: var(--re4-orange);
+}
+.PWrapper .PFooter .PIndicator {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.52vw;
+    font-weight: 500;
+    color: var(--re4-orange);
+    letter-spacing: 0.05vw;
+    text-shadow: 0 0 0.2vw rgba(255,107,26,0.4);
 }
 
 /* ============================================================
@@ -537,227 +611,208 @@ html, body {
 .PWrapper .Metadata {
     position: absolute;
     display: flex;
-    width: 13.8021vw;
-    right: -15.65vw;
-    top: -5.45vw;
+    width: 13.5vw;
+    right: -15.5vw;
+    top: -3.4vw;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 0.2vw;
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
-    border: 0.05vw solid var(--border-accent);
-    border-radius: 0.4vw;
-    padding: 0.6vw 0.5vw;
-    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.6vw var(--white-glow), inset 0 0 0.5vw rgba(0,0,0,0.6);
+    background: var(--re4-bg-1);
+    border: 0.08vw solid var(--re4-border);
+    padding: 0.6vw 0.55vw;
+    box-shadow:
+        0 0.5vw 1.5vw rgba(0,0,0,0.85),
+        inset 0 0 0.4vw rgba(0,0,0,0.6);
 }
-
+.PWrapper .Metadata::before,
+.PWrapper .Metadata::after {
+    content: "";
+    position: absolute;
+    width: 0.45vw;
+    height: 0.45vw;
+    border: 0.06vw solid var(--re4-orange);
+    pointer-events: none;
+    filter: drop-shadow(0 0 0.15vw var(--re4-orange));
+}
+.PWrapper .Metadata::before {
+    top: -0.1vw; left: -0.1vw;
+    border-right: none; border-bottom: none;
+}
+.PWrapper .Metadata::after {
+    bottom: -0.1vw; right: -0.1vw;
+    border-left: none; border-top: none;
+}
 .PWrapper .Metadata .Title {
-    position: relative;
     display: flex;
-    width: 98%;
-    height: 0.9vw;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    color: var(--white);
+    padding-bottom: 0.2vw;
+    border-bottom: 0.04vw solid var(--re4-border);
 }
-
 .PWrapper .Metadata .Title span {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.85vw;
-    font-weight: 600;
-    letter-spacing: 0.05vw;
+    font-weight: 700;
+    letter-spacing: 0.1vw;
+    color: var(--re4-orange);
+    text-shadow: 0 0 0.3vw rgba(255,107,26,0.5);
     text-align: center;
+    text-transform: uppercase;
 }
-
 .PWrapper .Metadata .Line {
-    position: relative;
-    display: flex;
-    width: 98%;
-    height: 0.03vw;
-    margin-top: 0.15vw;
-    background: linear-gradient(90deg, transparent 0%, var(--border-accent) 50%, transparent 100%);
+    display: none;
 }
-
 .PWrapper .Metadata .Values {
-    position: relative;
     display: flex;
-    width: 98%;
-    margin-top: 0.3vw;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
     flex-direction: column;
-    gap: 0.2vw;
+    gap: 0.15vw;
+    margin-top: 0.2vw;
 }
-
 .PWrapper .Metadata .Values .Value {
-    position: relative;
     display: flex;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    padding: 0.05vw 0;
-    border-bottom: 0.03vw solid rgba(255,255,255,0.03);
+    padding: 0.08vw 0;
+    border-bottom: 0.03vw solid rgba(255,107,26,0.08);
 }
-
 .PWrapper .Metadata .Values .Value:last-child { border-bottom: none; }
-
 .PWrapper .Metadata .Values .Value .Key {
-    position: relative;
-    display: flex;
-    height: 0.85vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.58vw;
-    font-weight: 300;
-    letter-spacing: 0.02vw;
-    align-items: center;
-    color: var(--text-2);
+    font-family: 'Special Elite', serif;
+    font-size: 0.52vw;
+    font-weight: 400;
+    letter-spacing: 0.15vw;
+    color: var(--re4-ink-faint);
     text-transform: uppercase;
 }
-
 .PWrapper .Metadata .Values .Value .Val {
     position: absolute;
-    right: 0;
+    right: 0.55vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex-direction: row;
-    gap: 0.25vw;
+    gap: 0.3vw;
 }
-
 .PWrapper .Metadata .Values .Value .Val span {
-    height: 0.85vw;
     font-family: 'Inter', sans-serif;
-    font-size: 0.58vw;
-    font-weight: 500;
-    letter-spacing: 0.02vw;
-    color: var(--text-0);
-    display: flex;
-    align-items: center;
+    font-size: 0.55vw;
+    font-weight: 600;
+    color: var(--re4-ink);
+    letter-spacing: 0.03vw;
 }
-
 .PWrapper .Metadata .Values .Value .Val .Status {
-    position: relative;
     display: flex;
     width: 0.22vw;
     height: 0.85vw;
-    background: #000;
-    border-radius: 0.1vw;
+    background: var(--re4-bg-0);
     justify-content: center;
     align-items: flex-end;
     overflow: hidden;
-    border: 0.03vw solid var(--border-soft);
+    border: 0.03vw solid var(--re4-border);
 }
-
 .PWrapper .Metadata .Values .Value .Val .Status .Progress {
-    position: absolute;
-    display: flex;
     width: 100%;
     bottom: 0;
     transition: height 0.25s;
 }
 
 /* ============================================================
-   NOTIFICATIONS (FIXED — no black background)
+   NOTIFICATIONS
    ============================================================ */
 .NotificationsWrapper {
     position: fixed;
-    bottom: 0.8vw;
-    right: 0.8vw;
+    top: 0.9vw;
+    right: 0.9vw;
     display: flex;
     flex-direction: column;
-    gap: 0.5vw;
+    gap: 0.45vw;
     z-index: 9999;
     pointer-events: none;
 }
-
 .Notification {
     position: relative;
-    width: 18vw;
-    padding: 0.7vw 0.9vw;
+    width: 17vw;
+    padding: 0.65vw 0.85vw;
     display: flex;
     align-items: center;
     gap: 0.6vw;
     pointer-events: auto;
-    background: linear-gradient(180deg, rgba(20, 20, 28, 0.55) 0%, rgba(12, 12, 18, 0.35) 100%);
-    border: 0.06vw solid rgba(255, 255, 255, 0.14);
-    border-radius: 0.3vw;
-    box-shadow:
-        0 0.5vw 1.5vw rgba(0, 0, 0, 0.35),
-        0 0 0.4vw rgba(255, 255, 255, 0.08);
-    color: var(--text-1);
+    background: var(--re4-bg-1);
+    border: 0.06vw solid var(--re4-border);
+    border-left: 0.18vw solid var(--re4-orange);
+    color: var(--re4-ink);
     font-family: 'Inter', sans-serif;
     opacity: 0;
-    transform: translateY(1.2vw) translateX(140%);
-    transition: opacity 0.3s ease, transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(140%);
+    transition: opacity 0.3s, transform 0.7s var(--ease-spring);
     overflow: hidden;
+    box-shadow:
+        0 0.4vw 1.2vw rgba(0,0,0,0.8),
+        inset 0 0 0.3vw rgba(0,0,0,0.6),
+        0 0 0.3vw rgba(255,107,26,0.15);
 }
-
 .Notification::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    pointer-events: none;
+    top: 0; left: 0; right: 0;
+    height: 0.03vw;
+    background: linear-gradient(90deg, transparent, rgba(255,107,26,0.5), transparent);
 }
-
 .Notification.enter {
     opacity: 1;
-    transform: translateY(0) translateX(0);
+    transform: translateX(0);
 }
-
 .Notification.exit {
     opacity: 0;
-    transform: translateY(1.2vw) translateX(30%);
+    transform: translateX(40%);
 }
-
 .Notification i {
-    font-size: 1vw;
+    font-size: 0.95vw;
     flex-shrink: 0;
-    color: var(--white);
-    filter: drop-shadow(0 0 0.2vw var(--white-glow));
+    color: var(--re4-orange);
+    filter: drop-shadow(0 0 0.2vw rgba(255,107,26,0.6));
 }
+.Notification.success { border-left-color: var(--re4-yellow); }
+.Notification.success i { color: var(--re4-yellow); filter: drop-shadow(0 0 0.2vw rgba(232,184,58,0.6)); }
+.Notification.error { border-left-color: var(--re4-red-hot); }
+.Notification.error i { color: var(--re4-red-hot); filter: drop-shadow(0 0 0.2vw rgba(255,42,42,0.6)); }
 
 .Notification .NotificationContent {
     display: flex;
     flex-direction: column;
-    gap: 0.1vw;
+    gap: 0.08vw;
     flex: 1;
     min-width: 0;
 }
-
 .Notification .NotificationTitle {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.82vw;
-    font-weight: 600;
-    letter-spacing: 0.04vw;
-    color: var(--white);
+    font-size: 0.78vw;
+    font-weight: 700;
+    letter-spacing: 0.08vw;
+    color: var(--re4-ink);
+    text-transform: uppercase;
 }
-
+.Notification.success .NotificationTitle { color: var(--re4-yellow); }
+.Notification.error .NotificationTitle { color: var(--re4-red-hot); }
 .Notification .NotificationDesc {
-    font-size: 0.6vw;
-    color: var(--text-2);
-    word-break: break-word;
+    font-size: 0.58vw;
+    color: var(--re4-ink-dim);
     line-height: 1.35;
+    word-break: break-word;
 }
-
 .Notification .NotificationProgress {
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 0.15vw;
+    height: 0.12vw;
     width: 100%;
-    background: linear-gradient(90deg, var(--white) 0%, rgba(255,255,255,0.3) 100%);
+    background: linear-gradient(90deg, var(--re4-orange) 0%, var(--re4-orange-dark) 100%);
     animation-timing-function: linear;
-    box-shadow: 0 0 0.2vw rgba(255,255,255,0.15);
+    box-shadow: 0 0 0.2vw rgba(255,107,26,0.4);
 }
+.Notification.success .NotificationProgress { background: linear-gradient(90deg, var(--re4-yellow), #a07a1e); }
+.Notification.error .NotificationProgress { background: linear-gradient(90deg, var(--re4-red-hot), var(--re4-red)); }
 
 @keyframes progressBar {
     from { width: 100%; }
@@ -770,117 +825,111 @@ html, body {
 .Overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.55);
     z-index: 9998;
 }
-
 .InputWrapper {
     position: fixed;
     left: 50%;
     bottom: 8vw;
     transform: translateX(-50%);
-    width: 26.0417vw;
+    width: 26vw;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
-    font-family: 'Inter', sans-serif;
-    border-radius: 0.4vw;
-    border: 0.06vw solid var(--border-accent);
+    background: var(--re4-bg-1);
+    border: 0.08vw solid var(--re4-border);
     overflow: hidden;
-    box-shadow: 0 1vw 2.5vw rgba(0,0,0,0.9), 0 0 0.8vw var(--white-glow);
+    box-shadow:
+        0 1vw 2.5vw rgba(0,0,0,0.9),
+        0 0 0.6vw rgba(255,107,26,0.25);
     z-index: 9999;
+    font-family: 'Inter', sans-serif;
 }
-
+.InputWrapper::before,
+.InputWrapper::after {
+    content: "";
+    position: absolute;
+    width: 0.5vw;
+    height: 0.5vw;
+    border: 0.08vw solid var(--re4-orange);
+    pointer-events: none;
+    filter: drop-shadow(0 0 0.2vw var(--re4-orange));
+}
+.InputWrapper::before {
+    top: -0.15vw; left: -0.15vw;
+    border-right: none; border-bottom: none;
+}
+.InputWrapper::after {
+    bottom: -0.15vw; right: -0.15vw;
+    border-left: none; border-top: none;
+}
 .InputWrapper .Header {
-    position: relative;
     display: flex;
     width: 100%;
-    height: 1.3vw;
+    height: 1.35vw;
     justify-content: flex-start;
     align-items: center;
-    flex-direction: row;
-    gap: 0.3vw;
-    border-bottom: 0.05vw solid var(--border-accent);
-    font-size: 0.62vw;
-    font-weight: 400;
-    color: var(--text-1);
-    background: rgba(0,0,0,0.4);
+    gap: 0.35vw;
+    border-bottom: 0.06vw solid var(--re4-border);
+    background: var(--re4-bg-0);
+    padding: 0 0.6vw;
 }
-
-.InputWrapper .Header img {
-    width: 1.2vw;
-    height: 1vw;
-    margin-left: 0.4vw;
-    object-fit: contain;
-}
-
-.InputWrapper .Header .Line {
-    width: 0.04vw;
-    height: 0.7vw;
-    background: var(--border-accent);
-}
-
 .InputWrapper .Header i {
-    margin-left: 0.5vw;
-    color: var(--white);
-    font-size: 0.6vw;
+    color: var(--re4-orange);
+    font-size: 0.62vw;
+    filter: drop-shadow(0 0 0.2vw rgba(255,107,26,0.6));
 }
-
+.InputWrapper .Header .Line {
+    width: 0.06vw;
+    height: 0.7vw;
+    background: var(--re4-border);
+}
 .InputWrapper .Header span {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    letter-spacing: 0.04vw;
-    color: var(--white);
+    font-weight: 700;
+    font-size: 0.72vw;
+    letter-spacing: 0.1vw;
+    color: var(--re4-ink);
+    text-transform: uppercase;
 }
-
 .InputWrapper .Body {
-    position: relative;
     display: flex;
     width: 100%;
-    height: 1.8229vw;
+    height: 1.9vw;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
-    background: rgba(0,0,0,0.2);
+    background: var(--re4-bg-1);
 }
-
 .InputWrapper .Body .InsideCon {
-    position: absolute;
     display: flex;
-    width: 98.25%;
-    height: 72%;
-    background: #0d0d0d;
-    border: 0.04vw solid var(--border-soft);
-    border-radius: 0.2vw;
+    width: 97.5%;
+    height: 70%;
+    background: var(--re4-bg-0);
+    border: 0.05vw solid var(--re4-border);
     justify-content: flex-start;
     align-items: center;
-    box-shadow: inset 0 0.1vw 0.2vw rgba(0,0,0,0.9);
+    box-shadow: inset 0 0.1vw 0.25vw rgba(0,0,0,0.9);
 }
-
 .InputWrapper .Body span {
-    position: absolute;
     display: flex;
-    left: 0.5vw;
+    margin-left: 0.55vw;
+    font-family: 'Inter', sans-serif;
     font-size: 0.62vw;
-    color: var(--text-0);
-    letter-spacing: 0.02vw;
+    color: var(--re4-orange);
+    letter-spacing: 0.03vw;
 }
-
 .InputWrapper .Body .InsideCon span::after {
     content: "";
     display: inline-block;
-    width: 0.04vw;
-    height: 0.6vw;
-    background: var(--white);
-    margin-left: 0.1vw;
-    margin-bottom: 0.05vw;
+    width: 0.06vw;
+    height: 0.65vw;
+    background: var(--re4-orange);
+    margin-left: 0.12vw;
     animation: blink 1s steps(2, start) infinite;
-    align-self: center;
-    box-shadow: 0 0 0.15vw var(--white-glow);
+    box-shadow: 0 0 0.2vw var(--re4-orange);
 }
-
 @keyframes blink { to { visibility: hidden; } }
 
 /* ============================================================
@@ -888,95 +937,81 @@ html, body {
    ============================================================ */
 .KBLWrapper {
     position: fixed;
-    right: 1.0417vw;
-    top: 1.0417vw;
+    right: 1vw;
+    top: 1vw;
     display: flex;
-    width: 7.5vw;
-    justify-content: center;
-    align-items: center;
+    width: 8vw;
     flex-direction: column;
     font-family: 'Inter', sans-serif;
-    border-radius: 0.35vw;
-    border: 0.05vw solid var(--border-accent);
+    border: 0.06vw solid var(--re4-border);
     overflow: hidden;
-    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.5vw var(--white-glow);
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
+    box-shadow:
+        0 0.4vw 1.2vw rgba(0,0,0,0.8),
+        0 0 0.4vw rgba(255,107,26,0.2);
+    background: var(--re4-bg-1);
     z-index: 9999;
 }
-
 .KBLWrapper .Header {
-    position: relative;
     display: flex;
     width: 100%;
     height: 1.05vw;
-    justify-content: flex-start;
     align-items: center;
-    background: rgba(0,0,0,0.5);
-    border-bottom: 0.05vw solid var(--border-accent);
+    background: var(--re4-bg-0);
+    border-bottom: 0.06vw solid var(--re4-border);
+    padding: 0 0.35vw;
+    gap: 0.25vw;
 }
-
 .KBLWrapper .Header .Icon {
-    margin-left: 0.3vw;
-    color: var(--white);
+    color: var(--re4-orange);
+    font-size: 0.55vw;
+    filter: drop-shadow(0 0 0.2vw rgba(255,107,26,0.5));
 }
-
 .KBLWrapper .Header span {
-    margin-left: 0.2vw;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.62vw;
-    font-weight: 600;
-    letter-spacing: 0.05vw;
-    color: var(--white);
-}
-
-.KBLWrapper .Binds {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 0.12vw;
-    background: rgba(0,0,0,0.2);
-    padding: 0.2vw 0;
-}
-
-.KBLWrapper .Binds .Keybind {
-    position: relative;
-    display: flex;
-    width: 96%;
-    height: 0.75vw;
-    justify-content: flex-start;
-    align-items: center;
-    border-bottom: 0.03vw solid rgba(255,255,255,0.03);
-}
-
-.KBLWrapper .Binds .Keybind:last-child { border-bottom: none; }
-
-.KBLWrapper .Binds .Keybind .Label {
-    position: absolute;
-    left: 0.2vw;
+    font-family: 'Special Elite', serif;
     font-size: 0.55vw;
     font-weight: 400;
-    color: var(--text-2);
+    letter-spacing: 0.18vw;
+    color: var(--re4-orange);
+    text-transform: uppercase;
 }
-
+.KBLWrapper .Binds {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.1vw;
+    background: var(--re4-bg-1);
+    padding: 0.2vw 0.3vw;
+}
+.KBLWrapper .Binds .Keybind {
+    display: flex;
+    width: 100%;
+    height: 0.72vw;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 0.03vw solid rgba(255,107,26,0.06);
+    position: relative;
+}
+.KBLWrapper .Binds .Keybind:last-child { border-bottom: none; }
+.KBLWrapper .Binds .Keybind .Label {
+    position: absolute;
+    left: 0.1vw;
+    font-size: 0.52vw;
+    font-weight: 400;
+    color: var(--re4-ink-dim);
+}
 .KBLWrapper .Binds .Keybind .Elements {
     position: absolute;
-    right: 0.2vw;
+    right: 0.1vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex-direction: row;
     gap: 0.2vw;
 }
-
 .KBLWrapper .Binds .Keybind .Elements span {
-    font-size: 0.55vw;
-    font-weight: 500;
-    color: var(--white);
-    letter-spacing: 0.02vw;
+    font-size: 0.52vw;
+    font-weight: 600;
+    color: var(--re4-orange);
+    letter-spacing: 0.03vw;
 }
 
 /* ============================================================
@@ -986,65 +1021,64 @@ html, body {
     position: fixed;
     left: 50%;
     top: 50%;
-    width: 1.25vw;
+    width: 1.4vw;
     transform: translate(-50%, -50%);
-    color: var(--white);
-    filter: drop-shadow(0 0 0.2vw var(--white-glow));
+    filter: drop-shadow(0 0 0.3vw var(--re4-orange));
     pointer-events: none;
     z-index: 9997;
+    opacity: 0.85;
 }
 
 /* ============================================================
-   FREECAM OPTIONS
+   FREECAM
    ============================================================ */
 .FCWrapper {
     position: fixed;
     left: 50%;
     bottom: 4vw;
-    max-height: 13.0208vw;
+    max-height: 13vw;
     transform: translateX(-50%);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     font-family: 'Inter', sans-serif;
-    gap: 0.35vw;
+    gap: 0.3vw;
     z-index: 9997;
 }
-
 .FCWrapper .Option {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05vw;
+    font-size: 1vw;
     font-weight: 600;
-    letter-spacing: 0.06vw;
-    color: var(--text-1);
-    text-shadow: 0 0 0.2vw rgba(0,0,0,0.9), 0 0 0.4vw rgba(0,0,0,0.8), 0 0 0.7vw rgba(0,0,0,0.6);
-    transition: opacity 0.25s, transform 0.15s;
+    letter-spacing: 0.08vw;
+    color: var(--re4-ink-dim);
+    text-shadow:
+        0 0 0.2vw rgba(0,0,0,0.95),
+        0 0 0.5vw rgba(0,0,0,0.85);
+    transition: opacity 0.25s, transform 0.15s, color 0.25s;
+    text-transform: uppercase;
 }
-
 .FCWrapper .Option.Selected {
-    color: var(--white);
+    color: var(--re4-orange);
     font-weight: 700;
     transform: scale(1.05);
-    text-shadow: 0 0 0.25vw var(--white-glow), 0 0 0.5vw rgba(0,0,0,0.9), 0 0 0.9vw rgba(0,0,0,0.7);
+    text-shadow:
+        0 0 0.3vw rgba(255,107,26,0.9),
+        0 0 0.6vw rgba(0,0,0,0.9);
 }
-
 .FCWrapper .Option .FCdash {
-    color: var(--white);
+    color: var(--re4-orange);
     font-weight: 700;
-    text-shadow: 0 0 0.25vw var(--white-glow);
 }
-
 .FCWrapper .Option .CycleHighlight {
-    color: var(--white);
+    color: var(--re4-orange-hot);
     font-weight: 700;
-    letter-spacing: 0.04vw;
-    text-shadow: 0 0 0.3vw var(--white-glow);
+    letter-spacing: 0.05vw;
+    text-shadow: 0 0 0.3vw rgba(255,107,26,0.7);
 }
 
 ::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
@@ -1055,50 +1089,54 @@ html, body {
 .Desc {
     position: fixed;
     left: 50%;
-    bottom: 1.5vw;
+    bottom: 1.4vw;
     transform: translateX(-50%);
     display: flex;
     width: auto;
-    max-width: 60vw;
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
-    border: 0.05vw solid var(--border-accent);
-    border-radius: 0.3vw;
-    padding: 0.5vw 0.9vw;
+    max-width: 62vw;
+    background: var(--re4-bg-1);
+    border: 0.06vw solid var(--re4-border);
+    border-top: 0.06vw solid var(--re4-orange);
+    padding: 0.55vw 0.95vw;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 0.62vw;
-    letter-spacing: 0.02vw;
-    color: var(--text-1);
+    font-size: 0.6vw;
+    letter-spacing: 0.03vw;
+    color: var(--re4-ink-dim);
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.8), 0 0 0.5vw var(--white-glow);
+    box-shadow:
+        0 0.4vw 1.2vw rgba(0,0,0,0.8),
+        0 0 0.4vw rgba(255,107,26,0.15);
     text-align: center;
     z-index: 9996;
 }
+.Desc span { color: var(--re4-ink-dim); }
+.Desc .hazard { color: var(--re4-yellow); margin-left: 0.3vw; font-weight: 500; }
+.Desc .locked { color: var(--re4-red-hot); margin-left: 0.3vw; font-weight: 500; }
 
-.Desc span { color: var(--text-1); }
-.Desc .hazard { color: #ffb020; margin-left: 0.2vw; }
-.Desc .locked { color: #ff3344; margin-left: 0.2vw; }
-
+/* FADE */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(0.5vw); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeOut {
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(0.5vw); }
 }
-
-.fadeIn { animation: fadeIn 0.25s ease-out; }
-.fadeOut { animation: fadeOut 0.2s ease-in; }
+.fadeIn { animation: fadeIn 0.3s var(--ease-soft); }
+.fadeOut { animation: fadeOut 0.22s var(--ease-soft); }
 </style>
 </head>
 <body>
 <div id="root">
     <div class="PWrapper" id="menuWrapper" style="visibility: hidden;">
         <div class="PBanner">
-            <img id="bannerImg" src="https://i.postimg.cc/63Wfjhfg/60555fdf-8704-4a32-a1cf-0b864d4439a2.png" draggable="false" alt="">
+            <div class="PBannerIcon"><i class="fa-solid fa-skull"></i></div>
+            <div class="PBannerText">
+                <span class="PTitle"><span class="PAccent">NEXUS</span> · RE4</span>
+                <span class="PSub">zombie edition</span>
+            </div>
         </div>
         <div class="PElements">
             <div class="PScroll">
@@ -1111,11 +1149,10 @@ html, body {
             <div class="PRightElements">
                 <div class="PCategories" id="categories"></div>
                 <div class="PTabs" id="tabs">
-                    <div class="activeIndicator" id="activeIndicator" style="position:absolute;width:100%;top:0;height:1.5625vw;background:rgba(255,255,255,0.06);border-left:0.05vw solid rgba(255,255,255,0.6);border-radius:0.2vw;z-index:0;transition:top 200ms ease,height 120ms ease;pointer-events:none;"></div>
+                    <div class="activeIndicator" id="activeIndicator"></div>
                 </div>
                 <div class="PFooter">
-                    <img src="https://i.postimg.cc/cCM7nm31/1ef3dff8bebea3f343874bed403b059e.webp" alt="">
-                    <span class="PBuild">discord.gg/h2ck : zombie </span>
+                    <span class="PBuild">discord.gg/<span class="PAccent">h2ck</span> · zombie</span>
                     <span class="PIndicator" id="footerIndicator">(0/0)</span>
                 </div>
             </div>
@@ -1129,9 +1166,8 @@ html, body {
         <div class="Overlay"></div>
         <div class="InputWrapper">
             <div class="Header">
-                <img src="https://i.postimg.cc/cCM7nm31/1ef3dff8bebea3f343874bed403b059e.webp" alt="">
-                <div class="Line"></div>
                 <i class="fa-solid fa-keyboard"></i>
+                <div class="Line"></div>
                 <span id="keyboardTitle">Keyboard Input</span>
             </div>
             <div class="Body">
@@ -1201,7 +1237,6 @@ html, body {
         freecamOptions: document.getElementById("freecamOptions"),
         descBox: document.getElementById("descBox"),
         descText: document.getElementById("descText"),
-        bannerImg: document.getElementById("bannerImg"),
         psProgress: document.getElementById("psProgress")
     };
 
@@ -1234,7 +1269,7 @@ html, body {
             });
         } else {
             const c = el("div", "PCategory active");
-            c.textContent = State.menuPath.length > 0 ? State.menuPath[State.menuPath.length - 1] : "MAIN MENU";
+            c.textContent = State.menuPath.length > 0 ? State.menuPath[State.menuPath.length - 1] : "Main Menu";
             DOM.categories.appendChild(c);
         }
     }
@@ -1275,14 +1310,16 @@ html, body {
 
             if (tab.hazardous) {
                 const hz = el("span");
-                hz.style.color = "#ffb020";
-                hz.textContent = " \u26A0";
+                hz.style.color = "var(--re4-yellow)";
+                hz.style.marginLeft = "0.2vw";
+                hz.textContent = "⚠";
                 label.appendChild(hz);
             }
             if (tab.locked) {
                 const lk = el("span");
-                lk.style.color = "#ff3344";
-                lk.textContent = " \uD83D\uDD12";
+                lk.style.color = "var(--re4-red-hot)";
+                lk.style.marginLeft = "0.2vw";
+                lk.textContent = "🔒";
                 label.appendChild(lk);
             }
 
@@ -1290,7 +1327,7 @@ html, body {
 
             switch (tab.type) {
                 case "subMenu": {
-                    tabEl.appendChild(el("i", "fa-solid fa-angle-right"));
+                    tabEl.appendChild(el("i", "fa-solid fa-chevron-right"));
                     break;
                 }
                 case "checkbox": {
@@ -1335,9 +1372,9 @@ html, body {
                     const vals = tab.values || [];
                     const valIdx = isNumber(tab.value) ? tab.value - 1 : 0;
                     const current = vals[valIdx] !== undefined ? vals[valIdx] : "";
-                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, "‹"));
                     sc.appendChild(el("span", null, escapeHtml(current)));
-                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, "›"));
                     tabEl.appendChild(sc);
                     break;
                 }
@@ -1347,9 +1384,9 @@ html, body {
                     const vals = tab.values || [];
                     const valIdx = isNumber(tab.value) ? tab.value - 1 : 0;
                     const current = vals[valIdx] !== undefined ? vals[valIdx] : "";
-                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, "‹"));
                     sc.appendChild(el("span", null, escapeHtml(current)));
-                    sc.appendChild(el("span", null, "-"));
+                    sc.appendChild(el("span", null, "›"));
                     wrap.appendChild(sc);
                     const cb = el("div", "Checkbox" + (tab.checked ? " Checked" : ""));
                     cb.appendChild(el("div", "Inside"));
@@ -1429,8 +1466,8 @@ html, body {
         }
         DOM.descBox.style.display = "flex";
         let html = escapeHtml(tab.desc);
-        if (tab.hazardous) html += '<span class="hazard">\u00A0\u26A0\uFE0F Server may detect</span>';
-        if (tab.locked) html += '<span class="locked">\u00A0\uD83D\uDD12 Locked</span>';
+        if (tab.hazardous) html += '<span class="hazard">⚠ Server may detect</span>';
+        if (tab.locked) html += '<span class="locked">🔒 Locked</span>';
         DOM.descText.innerHTML = html;
     }
 
@@ -1458,13 +1495,13 @@ html, body {
             const val = el("div", "Val");
             const valSpan = el("span");
             valSpan.textContent = md.value !== undefined ? String(md.value) : "";
-            if (md.key === "Weapons" || md.key === "الأسلحة") valSpan.style.color = "#ff4455";
+            if (md.key === "Weapons" || md.key === "الأسلحة") valSpan.style.color = "var(--re4-red-hot)";
             val.appendChild(valSpan);
 
             if ((md.key === "Health" || md.key === "Armour" ||
                  md.key === "دم الاعب" || md.key === "درع الاعب") && md.color) {
                 const status = el("div", "Status");
-                status.style.backgroundColor = `rgba(${md.color}, 0.25)`;
+                status.style.backgroundColor = `rgba(${md.color}, 0.15)`;
                 const prog = el("div", "Progress");
                 const num = parseInt(md.value, 10);
                 prog.style.height = (isNaN(num) ? 0 : num) + "%";
@@ -1482,26 +1519,19 @@ html, body {
         duration = duration || 4000;
         const id = ++State.notificationId;
 
-        const notif = el("div", "Notification " + type);
+        const notif = el("div", "Notification " + (type || "info"));
         notif.id = "notif-" + id;
 
         const iconName = type === "success" ? "fa-circle-check"
             : type === "error" ? "fa-circle-xmark"
-            : "fa-circle-info";
-        const iconColor = type === "success" ? "#4ade80"
-            : type === "error" ? "#ff4455"
-            : "#ffffff";
+            : "fa-triangle-exclamation";
 
         const icon = el("i", "fa-solid " + iconName);
-        icon.style.color = iconColor;
         notif.appendChild(icon);
 
         const content = el("div", "NotificationContent");
         const t = el("div", "NotificationTitle");
         t.textContent = title || "Notification";
-        t.style.color = type === "success" ? "#4ade80"
-            : type === "error" ? "#ff4455"
-            : "var(--white)";
         content.appendChild(t);
         if (desc) {
             const d = el("div", "NotificationDesc");
@@ -1512,7 +1542,6 @@ html, body {
 
         const prog = el("div", "NotificationProgress");
         prog.style.animation = `progressBar ${duration}ms linear forwards`;
-        prog.style.backgroundColor = iconColor;
         notif.appendChild(prog);
 
         DOM.notifications.appendChild(notif);
@@ -1561,7 +1590,7 @@ html, body {
             if (isToggle) {
                 const statusSpan = el("span");
                 statusSpan.textContent = bind.checked ? "ON" : "OFF";
-                statusSpan.style.color = bind.checked ? "var(--white)" : "rgba(255,255,255,0.35)";
+                statusSpan.style.color = bind.checked ? "var(--re4-orange)" : "var(--re4-ink-faint)";
                 elements.appendChild(statusSpan);
             }
             row.appendChild(elements);
@@ -1593,15 +1622,15 @@ html, body {
             optionEl.style.opacity = opacity;
 
             let html = "";
-            if (isSelected) html += '<span class="FCdash">-</span>&nbsp;&nbsp;';
+            if (isSelected) html += '<span class="FCdash">›</span>&nbsp;&nbsp;';
             html += escapeHtml(opt);
             if (isSelected && opt === "Shoot Weapon" && State.freecamWeapons[State.freecamWeaponIndex]) {
-                html += `&nbsp;&nbsp;<span class="CycleHighlight">(${escapeHtml(State.freecamWeapons[State.freecamWeaponIndex])})</span>`;
+                html += `&nbsp;&nbsp;<span class="CycleHighlight">[${escapeHtml(State.freecamWeapons[State.freecamWeaponIndex])}]</span>`;
             }
             if (isSelected && opt === "Spawn Vehicle" && State.freecamVehicles[State.freecamVehicleIndex]) {
-                html += `&nbsp;&nbsp;<span class="CycleHighlight">(${escapeHtml(State.freecamVehicles[State.freecamVehicleIndex])})</span>`;
+                html += `&nbsp;&nbsp;<span class="CycleHighlight">[${escapeHtml(State.freecamVehicles[State.freecamVehicleIndex])}]</span>`;
             }
-            if (isSelected) html += '&nbsp;&nbsp;<span class="FCdash">-</span>';
+            if (isSelected) html += '&nbsp;&nbsp;<span class="FCdash">‹</span>';
             optionEl.innerHTML = html;
             DOM.freecamOptions.appendChild(optionEl);
         });
@@ -1637,7 +1666,7 @@ html, body {
                 DOM.metadata.style.display = "none";
                 DOM.descBox.style.display = "none";
             }
-        }, 220);
+        }, 240);
     }
 
     window.addEventListener("message", function(event) {
@@ -1713,9 +1742,16 @@ html, body {
             case "scroll": { scrollFreecam(data.direction); break; }
             case "updateKeyboard": { updateKeyboard(!!data.visible, data.title, data.value); break; }
             case "updateBanner": {
-                if (data.bannerLink) DOM.bannerImg.src = data.bannerLink;
                 if (data.bannerColor) {
-                    document.documentElement.style.setProperty("--menu-color", data.bannerColor);
+                    const hex = String(data.bannerColor).replace("#","");
+                    if (hex.length === 6) {
+                        const r = parseInt(hex.substring(0,2),16);
+                        const g = parseInt(hex.substring(2,4),16);
+                        const b = parseInt(hex.substring(4,6),16);
+                        if (!isNaN(r) && !isNaN(g) && !isNaN(b)) {
+                            document.documentElement.style.setProperty("--re4-orange", `rgb(${r},${g},${b})`);
+                        }
+                    }
                 }
                 break;
             }
@@ -1774,7 +1810,7 @@ html, body {
         updateActiveIndicator();
     });
 
-    console.log("[zombie] UI ready.");
+    console.log("[zombie] RE4 UI ready.");
 })();
 </script>
 </body>
